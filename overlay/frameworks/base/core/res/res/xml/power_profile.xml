@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+**
+** Copyright 2009, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License")
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<device name="Android">
+  <!-- All values are in mAh except as noted -->
+  <item name="none">0</item>
+  <item name="screen.on">30</item>
+  <item name="bluetooth.active">0.4</item> <!-- In call -->
+  <item name="bluetooth.on">0.8</item>
+  <!-- CPU wakelock held for 830ms on bluetooth headset at command. 43mA * 830 -->
+  <item name="bluetooth.at">35690</item>
+  <item name="screen.full">50</item>
+  <item name="wifi.on">0.2</item>
+  <item name="wifi.active">0.1</item>
+  <item name="wifi.scan">0.1</item>
+  <item name="dsp.audio">74</item>
+  <item name="dsp.video">243</item>
+  <item name="radio.active">200</item>
+  <item name="gps.on">70</item>
+  <item name="radio.scanning">30</item>
+  <array name="radio.on"> <!-- Strength 0 to BINS-1 -->
+      <value>3</value>
+      <value>2</value>
+  </array>
+  <array name="cpu.speeds">
+    <value>1000000</value>
+  </array>
+  <!-- Power consumption in suspend -->
+  <item name="cpu.idle">1.5</item>
+  <!-- Power consumption at different speeds -->
+  <array name="cpu.active">
+      <value>20</value>
+  </array>
+  <!-- This is the battery capacity in mAh -->
+  <item name="battery.capacity">4000</item>
+</device>
