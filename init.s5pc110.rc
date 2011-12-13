@@ -1,6 +1,12 @@
+import init.s5pc110.usb.rc
+
 on init
 
 loglevel 9
+    export EXTERNAL_STORAGE /mnt/sdcard
+
+    mkdir /mnt/sdcard 0000 system system
+    symlink /mnt/sdcard /sdcard
 
     # samsung kernel modules 
     insmod /lib/modules/fsr.ko
@@ -13,6 +19,31 @@ loglevel 9
     insmod /lib/modules/j4fs.ko
     mount j4fs /dev/block/stl6 /mnt/.lfs
     insmod /lib/modules/param.ko
+
+on boot
+    mount debugfs /sys/kernel/debug /sys/kernel/debug
+
+    # Tweak background writeout
+    write /proc/sys/vm/dirty_writeback_centisecs 2000
+    write /proc/sys/vm/dirty_expire_centisecs 1000
+    write /proc/sys/vm/dirty_ratio 90
+
+# Include extra init file
+    import /device.rc
+
+    setprop ro.build.product vzwtab
+    setprop ro.product.device vzwtab
+    setprop ro.radio.noril yes
+
+# fake some battery state
+    setprop status.battery.state Slow
+    setprop status.battery.level 5
+    setprop status.battery.level_raw  50
+    setprop status.battery.level_scale 9
+
+# phone
+    setprop ro.telephony.call_ring.multiple 0
+
 
 # permission for ddc
     chown system graphics /dev/i2c-1	
@@ -164,34 +195,25 @@ on property:ro.debuggable=1
 
 # 3D init
 service pvrsrvinit /system/bin/pvrsrvinit
+    class core
     user root
     group root
     oneshot
-        
-service pppd_cdma /system/bin/pppd_runner
-   user root
-   group radio cache inet misc system
-   disabled
-   oneshot
-    
+
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/wpa_supplicant.conf
+    class main
     socket wpa_eth0 dgram 0660 wifi wifi
     disabled
     oneshot
 
 service dhcpcd_eth0 /system/bin/dhcpcd -ABKL eth0
+    class main
     disabled
     oneshot
 
 # end of wifi
 
 service gps-daemon /system/vendor/bin/gpsd
+	class late_start
 	user system
 	group system inet
-
-on property:ril.cdma.data_ready=true
-    start pppd_cdma
-
-on property:ril.cdma.data_ready=false
-    stop pppd_cdma
-

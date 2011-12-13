@@ -42,7 +42,7 @@ TARGET_PROVIDES_INIT := true
 TARGET_PROVIDES_INIT_TARGET_RC := true
 TARGET_RECOVERY_INITRC := device/samsung/galaxytab/recovery.rc
 
-TARGET_BOARD_PLATFORM := s5pv210
+TARGET_BOARD_PLATFORM := s5pc110
 TARGET_BOARD_PLATFORM_GPU := POWERVR_SGX540_120
 TARGET_BOOTLOADER_BOARD_NAME := s5pc110
 
@@ -68,7 +68,7 @@ WIFI_DRIVER_FW_PATH_STA := "/system/etc/wifi/bcm4329_sta.bin"
 WIFI_DRIVER_MODULE_NAME := "dhd"
 BOARD_WEXT_NO_COMBO_SCAN := true
 
-USE_CAMERA_STUB := true
+USE_CAMERA_STUB := false
 ifeq ($(USE_CAMERA_STUB),false)
 BOARD_CAMERA_LIBRARIES := libcamera
 endif
@@ -79,6 +79,7 @@ BOARD_SECOND_CAMERA_DEVICE := /dev/video2
 # OpenGL stuff
 BOARD_EGL_CFG := device/samsung/galaxytab/prebuilt/lib/egl/egl.cfg
 #BOARD_USES_LEGACY_EGL := true
+USE_OPENGL_RENDERER := true
 
 # Device related defines
 BOARD_NAND_PAGE_SIZE := 4096 -s 128

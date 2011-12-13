@@ -81,4 +81,31 @@
     <!-- CRT Screen off animation -->
     <bool name="config_animateScreenLights">true</bool>
 
+    <!-- Control the behavior when the user long presses the power button.
+            0 - Nothing
+            1 - Global actions menu
+            2 - Power off (with confirmation)
+    -->
+    <integer name="config_longPressOnPowerBehavior">1</integer>
+
+    <!-- Diable lockscreen rotation by default -->
+    <bool name="config_enableLockScreenRotation">true</bool>
+
+    <!-- Control the behavior when the user long presses the home button.
+            0 - Nothing
+            1 - Recent apps dialog
+            2 - Recent apps view in SystemUI
+         This needs to match the constants in
+         policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
+    -->
+    <integer name="config_longPressOnHomeBehavior">1</integer>
+
+    <!-- Max space (in MB) allocated to DownloadManager to store the downloaded
+         files if they are to be stored in DownloadManager's data dir,
+         which typically is /data/data/com.android.providers.downloads/files -->
+    <integer name="config_downloadDataDirSize">250</integer>
+
+    <!-- Max number of downloads allowed to proceed concurrently -->
+    <integer name="config_MaxConcurrentDownloadsAllowed">10</integer>
+
 </resources>

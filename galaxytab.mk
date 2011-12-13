@@ -50,7 +50,8 @@ PRODUCT_COPY_FILES := \
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxytab/init.rc:root/init.rc \
-	device/samsung/galaxytab/init.smdkc110.rc:root/init.smdkc110.rc \
+	device/samsung/galaxytab/init.s5pc110.rc:root/init.s5pc110.rc \
+	device/samsung/galaxytab/init.s5pc110.usb.rc:root/init.s5pc110.usb.rc \
 	device/samsung/galaxytab/ueventd.rc:root/ueventd.rc \
 	device/samsung/galaxytab/lpm.rc:root/lpm.rc
 
@@ -65,13 +66,19 @@ PRODUCT_PACKAGES := \
 	make_ext4fs \
 	setup_fs
 
-# Libs
+# Lights
 PRODUCT_PACKAGES += \
 	lights.s5pc110
 
+# Audio
 PRODUCT_PACKAGES += \
+	audio.a2dp.default \
 	audio.primary.s5pc110 \
 	audio_policy.s5pc110
+
+# Camera 
+PRODUCT_PACKAGES += \
+	libs3cjpeg
 
 # These are the OpenMAX IL configuration files
 PRODUCT_COPY_FILES += \
@@ -93,10 +100,6 @@ PRODUCT_PACKAGES += \
 # apns config file
 PRODUCT_COPY_FILES += \
 	development/data/etc/apns-conf.xml:system/etc/apns-conf.xml
-
-# 3G
-PRODUCT_COPY_FILES += \
-	device/samsung/galaxytab/prebuilt/bin/pppd_runner:system/bin/pppd_runner
 
 # Touchscreen
 PRODUCT_COPY_FILES += \
@@ -126,7 +129,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.opengles.version=131072
 
-# Galaxy Tab GSM stuff
+# Samsung GSM stuff
 PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.multiple=false \
        ro.telephony.call_ring.delay=3000 \
@@ -146,7 +149,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
        wifi.interface=eth0 \
        wifi.supplicant_scan_interval=45 \
-       dalvik.vm.heapsize=48m \
+       dalvik.vm.heapstartsize=5m \
+       dalvik.vm.heapgrowthlimit=48m \
+       dalvik.vm.heapsize=128m \
        dalvik.vm.lockprof.threshold=500
 
 # enable Google-specific location features,
@@ -165,6 +170,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
+
+# Set default USB interface
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+	persist.sys.usb.config=mtp,adb
 
 # kernel modules for ramdisk
 PRODUCT_COPY_FILES += \
