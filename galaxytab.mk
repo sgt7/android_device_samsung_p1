@@ -125,12 +125,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
         device/samsung/galaxytab/prebuilt/etc/vold.fstab:system/etc/vold.fstab
 
-# The OpenGL ES API level that is natively supported by this device.
-# This is a 16.16 fixed point number
-PRODUCT_PROPERTY_OVERRIDES := \
-    ro.opengles.version=131072
-
-# Samsung GSM stuff
+# stuff
 PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.multiple=false \
        ro.telephony.call_ring.delay=3000 \
@@ -142,17 +137,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.ril.enable.managed.roaming=1 \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
        ro.ril.emc.mode=2 \
-       ro.sf.hwrotation=90
+       ro.sf.hwrotation=90 \
+       ro.product.characteristics=tablet
 
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
        wifi.interface=eth0 \
-       wifi.supplicant_scan_interval=45 \
-       dalvik.vm.heapstartsize=5m \
-       dalvik.vm.heapgrowthlimit=48m \
-       dalvik.vm.heapsize=128m \
+       wifi.supplicant_scan_interval=45
 
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
