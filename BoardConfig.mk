@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2009 The Android Open Source Project
+# Copyright (C) 2011 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@
 BOARD_USES_GENERIC_AUDIO := false
 
 BOARD_USES_LIBSECRIL_STUB := true
+
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
 # Use the non-open-source parts, if they're present
 -include vendor/samsung/galaxytab/BoardConfigVendor.mk
@@ -80,6 +82,9 @@ BOARD_SECOND_CAMERA_DEVICE := /dev/video2
 BOARD_EGL_CFG := device/samsung/galaxytab/prebuilt/lib/egl/egl.cfg
 #BOARD_USES_LEGACY_EGL := true
 USE_OPENGL_RENDERER := true
+
+# Indicate that the board has an Internal SD Card
+BOARD_HAS_SDCARD_INTERNAL := true
 
 # Device related defines
 BOARD_NAND_PAGE_SIZE := 4096 -s 128

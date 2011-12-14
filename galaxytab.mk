@@ -40,7 +40,8 @@
 # These is the hardware-specific overlay, which points to the location
 # of hardware-specific resource overrides, typically the frameworks and
 # application settings that are stored in resourced.
-DEVICE_PACKAGE_OVERLAYS := device/samsung/galaxytab/overlay
+DEVICE_PACKAGE_OVERLAYS := \
+    $(LOCAL_PATH)/overlay
 
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
@@ -152,7 +153,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
        dalvik.vm.heapstartsize=5m \
        dalvik.vm.heapgrowthlimit=48m \
        dalvik.vm.heapsize=128m \
-       dalvik.vm.lockprof.threshold=500
 
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
@@ -200,6 +200,11 @@ endif
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel
 
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+	make_ext4fs \
+	setup_fs
+
 # copy the filesystem converter
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxytab/updater.sh:updater.sh
@@ -209,3 +214,6 @@ PRODUCT_COPY_FILES += \
 # of the aspects that require proprietary drivers that aren't
 # commonly available
 $(call inherit-product-if-exists, vendor/samsung/galaxytab/device-vendor.mk)
+
+# It's a Tablet!
+$(call inherit-product, frameworks/base/build/tablet-dalvik-heap.mk)
