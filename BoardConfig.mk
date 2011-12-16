@@ -83,6 +83,9 @@ BOARD_EGL_CFG := device/samsung/galaxytab/prebuilt/lib/egl/egl.cfg
 #BOARD_USES_LEGACY_EGL := true
 USE_OPENGL_RENDERER := true
 
+# Skia
+BOARD_USE_SKIA_LCDTEXT := true
+
 # Indicate that the board has an Internal SD Card
 BOARD_HAS_SDCARD_INTERNAL := true
 
