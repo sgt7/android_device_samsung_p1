@@ -97,6 +97,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
         device/samsung/galaxytab/prebuilt/etc/vold.fstab:system/etc/vold.fstab
 
+# Tablet!
+PRODUCT_CHARACTERISTICS := tablet
+
 # stuff
 PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.multiple=false \
@@ -109,8 +112,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.ril.enable.managed.roaming=1 \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
        ro.ril.emc.mode=2 \
-       ro.sf.hwrotation=90 \
-       ro.product.characteristics=tablet
+       ro.sf.hwrotation=90 
 
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to

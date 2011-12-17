@@ -25,6 +25,9 @@ BOARD_USES_LIBSECRIL_STUB := true
 
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
+# Use a smaller subset of system fonts to keep image size lower
+SMALLER_FONT_FOOTPRINT := true
+
 # Use the non-open-source parts, if they're present
 -include vendor/samsung/galaxytab/BoardConfigVendor.mk
 
