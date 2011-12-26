@@ -39,6 +39,12 @@ PRODUCT_PACKAGES := \
 	make_ext4fs \
 	setup_fs
 
+# Utilities
+PRODUCT_COPY_FILES += \
+    device/samsung/galaxytab/prebuilt/mke2fs:utilities/mke2fs \
+    device/samsung/galaxytab/prebuilt/redbend_ua:utilities/redbend_ua 
+# redbend_ua is a propreitary file, but we'll let it in here for now.
+
 # Lights
 PRODUCT_PACKAGES += \
 	lights.s5pc110
