@@ -21,8 +21,7 @@ import galaxytab_common as common
 LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools/releasetools'))
 TARGET_DIR = os.getenv('OUT')
-KERNEL_DIR =  os.path.abspath(os.path.join(LOCAL_DIR, '/home/cdesai/cm9/device/samsung/galaxytab'))
-UTILITIES_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '/home/cdesai/2/cm9/out/target/product/galaxytab/utilities'))
+UTILITIES_DIR = os.path.join(TARGET_DIR, 'utilities')
 
 # Add releasetools directory to python path
 sys.path.append(RELEASETOOLS_DIR)
