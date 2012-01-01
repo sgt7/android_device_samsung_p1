@@ -73,6 +73,10 @@ WIFI_DRIVER_FW_PATH_STA := "/system/etc/wifi/bcm4329_sta.bin"
 WIFI_DRIVER_MODULE_NAME := "dhd"
 BOARD_WEXT_NO_COMBO_SCAN := true
 
+# 3G
+BOARD_MOBILEDATA_INTERFACE_NAME := "pdp0"
+
+# Camera
 USE_CAMERA_STUB := false
 ifeq ($(USE_CAMERA_STUB),false)
 BOARD_CAMERA_LIBRARIES := libcamera
