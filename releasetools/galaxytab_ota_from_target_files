@@ -22,6 +22,7 @@ LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file_
 RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools/releasetools'))
 TARGET_DIR = os.getenv('OUT')
 UTILITIES_DIR = os.path.join(TARGET_DIR, 'utilities')
+KERNEL_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../kernel/samsung/p1'))
 
 # Add releasetools directory to python path
 sys.path.append(RELEASETOOLS_DIR)
@@ -69,8 +70,8 @@ def WriteFullOTAPackage(input_zip, output_zip):
     script.FormatPartition("/data")
 
   script.Print("Flashing kernel ...")
-  script.RedbendUA("/tmp/zImage", "/dev/block/bml7")
-  script.RedbendUA("/tmp/zImage", "/dev/block/bml8")
+  script.WriteRawImage("/tmp/boot.img", "/dev/block/bml7")
+  script.WriteRawImage("/tmp/boot.img", "/dev/block/bml8")
 
   script.Print("Formatting system ...")
   #script.FormatPartition("/system")
@@ -97,10 +98,9 @@ def WriteFullOTAPackage(input_zip, output_zip):
 
   script.ShowProgress(0.2, 0)
 
-  output_zip.write(os.path.join(LOCAL_DIR, "zImage"),"zImage")
+  output_zip.write(os.path.join(KERNEL_DIR, "boot.img"),"boot.img")
   output_zip.write(os.path.join(UTILITIES_DIR, "mke2fs"),"mke2fs")
   output_zip.write(os.path.join(UTILITIES_DIR, "busybox"),"busybox")
-  output_zip.write(os.path.join(UTILITIES_DIR, "redbend_ua"),"redbend_ua")
 
   script.ShowProgress(0.1, 0)
   device_specific.FullOTA_InstallEnd()
