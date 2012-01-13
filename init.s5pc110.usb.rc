@@ -1,10 +1,44 @@
+# ===============================================================================
 on init
+# ===============================================================================
+
     write /sys/class/android_usb/android0/iSerial $ro.serialno
     write /sys/class/android_usb/android0/f_rndis/manufacturer Samsung
     write /sys/class/android_usb/android0/f_rndis/vendorID 04e8
     write /sys/class/android_usb/android0/f_rndis/wceis 1
 
+# ===============================================================================
+on post-fs
+# ===============================================================================
+
+    chmod 0664 /sys/devices/virtual/sec/switch/disable_vbus 
+    chmod 0664 /sys/devices/virtual/sec/switch/usb_state
+    chmod 0664 /sys/devices/virtual/sec/switch/usb_sel
+    chmod 0664 /sys/devices/virtual/sec/switch/uart_sel
+    
+    chown system radio /sys/devices/virtual/sec/switch/disable_vbus
+    chown system radio /sys/devices/virtual/sec/switch/usb_state
+    chown system radio /sys/devices/virtual/sec/switch/usb_sel
+    chown system radio /sys/devices/virtual/sec/switch/uart_sel
+
+    chmod 0664 /sys/devices/platform/android_usb/tethering
+    chmod 0664 /sys/devices/platform/android_usb/KiesStatus
+    chmod 0664 /sys/devices/platform/android_usb/UmsStatus
+    chmod 0664 /sys/devices/platform/android_usb/AskOnStatus
+    chmod 0664 /sys/devices/platform/android_usb/AskOnMenuSel
+    chmod 0664 /sys/devices/platform/android_usb/UsbMenuSel
+
+    chown system radio /sys/devices/platform/android_usb/tethering
+    chown system radio /sys/devices/platform/android_usb/KiesStatus
+    chown system radio /sys/devices/platform/android_usb/UmsStatus
+    chown system radio /sys/devices/platform/android_usb/AskOnStatus
+    chown system radio /sys/devices/platform/android_usb/AskOnMenuSel
+    chown system radio /sys/devices/platform/android_usb/UsbMenuSel
+
+# ===============================================================================
 on boot
+# ===============================================================================
+
     write /sys/class/android_usb/android0/iManufacturer $ro.product.manufacturer
     write /sys/class/android_usb/android0/iProduct $ro.product.model
 
@@ -85,3 +119,4 @@ on property:sys.usb.config=rndis,dm
     write /sys/class/android_usb/android0/functions $sys.usb.config
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state $sys.usb.config
+

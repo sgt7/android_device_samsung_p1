@@ -44,7 +44,6 @@ on boot
 # phone
     setprop ro.telephony.call_ring.multiple 0
 
-
 # permission for ddc
     chown system graphics /dev/i2c-1	
     chmod 660 /dev/i2c-1
@@ -89,10 +88,11 @@ on fs
     chmod 0771 /cache
 
 on post-fs-data
-    # create data/gps for GPS demon
-    mkdir /data/gps 771 gps system
-    chown gps system /data/gps
-    chmod 0777 /system/vendor/bin/gpsd
+# create data/gps for GPS demon
+	mkdir /data/gps 771 gps system
+	chown gps system /data/gps
+    chmod 0771 /data/gps
+	chmod 0755 /system/vendor/bin/gpsd
 
 # allow system to modify cpufreq control files
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -162,14 +162,10 @@ on boot
     chown radio system /sys/class/lcd/s5p_lcd/lcd_power
 
 #bluetooth
-    setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
-    chown bluetooth bluetooth ro.bt.bdaddr_path
     chown bluetooth bluetooth /dev/s3c2410_serial0
-    chmod 0660 /dev/s3c2410_serial0
+    chmod 0600 /dev/s3c2410_serial0
     chmod 0660 /sys/class/rfkill/rfkill0/state
-    chmod 0660 /sys/class/rfkill/rfkill1/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill1/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
 
 # +++++++++++++++++++++++++++++++++++++++++++
@@ -206,7 +202,7 @@ service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wif
     disabled
     oneshot
 
-service dhcpcd_eth0 /system/bin/dhcpcd -ABKL eth0
+service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
     class main
     disabled
     oneshot
@@ -214,6 +210,6 @@ service dhcpcd_eth0 /system/bin/dhcpcd -ABKL eth0
 # end of wifi
 
 service gps-daemon /system/vendor/bin/gpsd
-	class late_start
-	user system
-	group system inet
+    class main
+    user system
+    group system inet
