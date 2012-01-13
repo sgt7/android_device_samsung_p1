@@ -463,6 +463,12 @@ on boot
 # Include extra init file
     import /system/etc/init.local.rc
 
+# Fake some battery state
+    setprop status.battery.state Slow
+    setprop status.battery.level 5
+    setprop status.battery.level_raw  50
+    setprop status.battery.level_scale 9
+
 # Set this property so surfaceflinger is not started by system_init
     setprop system_init.startsurfaceflinger 0
 
