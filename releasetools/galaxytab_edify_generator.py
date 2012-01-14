@@ -32,7 +32,7 @@ class EdifyGenerator(edify_generator.EdifyGenerator):
             ('package_extract_file("busybox", "/tmp/busybox");\n'
              'set_perm(0, 0, 0777, "/tmp/busybox");'))
 
-      self.script.append('package_extract_file("boot.img", "/tmp/boot.img);')
+      self.script.append('package_extract_file("boot.img", "/tmp/boot.img");')
 
     def RunBackup(self, command):
       edify_generator.EdifyGenerator.RunBackup(self, command)
