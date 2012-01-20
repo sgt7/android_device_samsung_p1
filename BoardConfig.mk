@@ -119,3 +119,5 @@ TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /cache/.startrecovery; sync;"
 
 TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000
 
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun%d/file
+
