@@ -19,7 +19,7 @@ DEVICE_PACKAGE_OVERLAYS := \
 PRODUCT_COPY_FILES := \
 	device/samsung/galaxytab/prebuilt/etc/asound.conf:system/etc/asound.conf \
 	device/samsung/galaxytab/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg
-
+#device/samsung/galaxytab/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxytab/init.rc:root/init.rc \
@@ -89,7 +89,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
 	frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
 	frameworks/base/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
-	frameworks/base/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
+	frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
         frameworks/base/data/etc/android.hardware.location.xml:system/etc/permissions/android.hardware.location.xml \
 	frameworks/base/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
 	frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
@@ -103,6 +103,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
         device/samsung/galaxytab/prebuilt/etc/vold.fstab:system/etc/vold.fstab
 
+# firmware
+PRODUCT_COPY_FILES += \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F00.bin:system/firmware/CE147F00.bin \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F01.bin:system/firmware/CE147F01.bin \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F02.bin:system/firmware/CE147F02.bin \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F03.bin:system/firmware/CE147F03.bin
+
 # Tablet!
 PRODUCT_CHARACTERISTICS := tablet
 
@@ -111,8 +118,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.multiple=false \
        ro.telephony.call_ring.delay=3000 \
        ro.telephony.call_ring.absent=true \
-       ro.telephony.ril_class=samsung \
-       mobiledata.interfaces=eth0,pdp0 \
+       ro.telephony.ril_class=SamsungRIL \
+       mobiledata.interfaces=pdp0,eth0,gprs,ppp0 \
        phone.ril.classname=com.android.internal.telephony.SamsungRIL \
        ro.telephony.ril.v3=datacall,icccardstatus \
        ro.ril.enable.managed.roaming=1 \

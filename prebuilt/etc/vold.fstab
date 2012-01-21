@@ -12,3 +12,5 @@
 ## <sysfs_path> - List of sysfs paths to source devices
 ######################
 dev_mount sdcard /mnt/sdcard auto /devices/platform/s3c-sdhci.2/mmc_host/mmc1
+
+dev_mount emmc /mnt/emmc 1 /devices/platform/s3c-sdhci.0/mmc_host/mmc0
