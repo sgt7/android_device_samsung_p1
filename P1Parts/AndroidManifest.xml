@@ -4,7 +4,7 @@
    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
    <application android:label="@string/app_name">
-      <activity android:name=".AriesParts"
+      <activity android:name=".P1Parts"
                 android:label="@string/app_name">
          <intent-filter>
             <action android:name="com.cyanogenmod.action.LAUNCH_DEVICE_SETTINGS" />
