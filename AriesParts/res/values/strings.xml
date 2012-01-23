@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Galaxy S Settings</string>
+
+    <string name="category_screen_title">Screen</string>
+    <string name="color_tuning_title_head">Color Tuning</string>
+    <string name="color_tuning_summary_head">Calibrate screen color</string>
+    <string name="color_red_title">Red</string>
+    <string name="color_green_title">Green</string>
+    <string name="color_blue_title">Blue</string>
+
+    <string name="category_touchkey_title">Touch Keys</string>
+    <string name="backlight_timeout_title_head">Backlight Timeout</string>
+    <string name="backlight_timeout_summary_head">Adjust the delay before the touch key backlight automatically turns off</string>
+
+    <string name="category_radio_title">Radio</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">Enable HSDPA/HSUPA</string>
+
+    <string name="category_tvout_title">TV Out</string>
+    <string name="tvout_enable_head">TV Out</string>
+    <string name="tvout_enable_summary_nocable">TV Out cable not connected</string>
+    <string name="tvout_enable_summary">TV Out cable connected, check to enable</string>
+    <string name="tvout_enable_summary_on">TV Out enabled</string>
+    <string name="tvout_system_head">TV System</string>
+    <string name="tvout_system_summary">Set your TV system for TV Out</string>
+</resources>

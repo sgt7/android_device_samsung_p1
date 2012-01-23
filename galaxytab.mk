@@ -45,6 +45,10 @@ PRODUCT_COPY_FILES += \
     device/samsung/galaxytab/prebuilt/redbend_ua:utilities/redbend_ua 
 # redbend_ua is a propreitary file, but we'll let it in here for now.
 
+# utils
+PRODUCT_PACKAGES += \
+	bmlwrite
+
 # Lights
 PRODUCT_PACKAGES += \
 	lights.s5pc110
@@ -57,7 +61,17 @@ PRODUCT_PACKAGES += \
 
 # Camera 
 PRODUCT_PACKAGES += \
+	camera.s5pc110 \
 	libs3cjpeg
+
+# bluetooth
+PRODUCT_PACKAGES += \
+	bdaddr_read
+
+# tvout
+PRODUCT_PACKAGES += \
+	AriesParts \
+	tvouthack
 
 # These are the OpenMAX IL configuration files
 PRODUCT_COPY_FILES += \
@@ -74,6 +88,7 @@ PRODUCT_PACKAGES += \
 
 # Libs
 PRODUCT_PACKAGES += \
+	hwcomposer.s5pc110 \
 	libstagefrighthw
 
 # apns config file
@@ -118,9 +133,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.multiple=false \
        ro.telephony.call_ring.delay=3000 \
        ro.telephony.call_ring.absent=true \
-       ro.telephony.ril_class=SamsungRIL \
        mobiledata.interfaces=pdp0,eth0,gprs,ppp0 \
-       phone.ril.classname=com.android.internal.telephony.SamsungRIL \
        ro.telephony.ril.v3=datacall,icccardstatus \
        ro.ril.enable.managed.roaming=1 \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
@@ -131,7 +144,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
-       wifi.supplicant_scan_interval=45
+       wifi.supplicant_scan_interval=20
 
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
@@ -178,11 +191,6 @@ endif
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel
-
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-	make_ext4fs \
-	setup_fs
 
 # copy the filesystem converter
 PRODUCT_COPY_FILES += \

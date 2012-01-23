@@ -9,7 +9,7 @@ LOCAL_SRC_FILES := \
 
 LOCAL_MODULE := libsecmfcdecapi.s5pc110
 
-LOCAL_PRELINK_MODULE := false
+
 
 LOCAL_CFLAGS :=
 

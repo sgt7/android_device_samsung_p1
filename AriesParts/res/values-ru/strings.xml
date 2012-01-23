@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Настройки Galaxy S</string>
+
+    <string name="category_screen_title">Экран</string>
+    <string name="color_tuning_title_head">Настройки цвета</string>
+    <string name="color_tuning_summary_head">Калибровка цвета экрана</string>
+    <string name="color_red_title">Красный</string>
+    <string name="color_green_title">Зелёный</string>
+    <string name="color_blue_title">Синий</string>
+
+    <string name="category_touchkey_title">Сенсорные кнопки</string>
+    <string name="backlight_timeout_title_head">Таймаут подсветки</string>
+    <string name="backlight_timeout_summary_head">Как долго работает подсветка сенсорных кнопок</string>
+
+    <string name="category_radio_title">Радиомодуль</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">Включить HSDPA/HSUPA</string>
+</resources>

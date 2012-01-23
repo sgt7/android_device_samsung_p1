@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Galaxy S 設定</string>
+
+    <string name="category_screen_title">螢幕</string>
+    <string name="color_tuning_title_head">色彩調整</string>
+    <string name="color_tuning_summary_head">校正螢幕色彩</string>
+    <string name="color_red_title">紅</string>
+    <string name="color_green_title">綠</string>
+    <string name="color_blue_title">藍</string>
+
+    <string name="category_touchkey_title">觸控鍵</string>
+    <string name="backlight_timeout_title_head">背光逾時</string>
+    <string name="backlight_timeout_summary_head">調整觸控鍵背光自動關閉前的延遲時間</string>
+
+    <string name="category_radio_title">行動網路</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">啟用 HSDPA／HSUPA</string>
+</resources>

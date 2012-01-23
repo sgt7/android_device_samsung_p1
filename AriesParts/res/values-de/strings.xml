@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Galaxy-S-Einstellungen</string>
+
+    <string name="category_screen_title">Bildschirm</string>
+    <string name="color_tuning_title_head">Farbanpassung</string>
+    <string name="color_tuning_summary_head">Bildschirmfarben kalibrieren</string>
+    <string name="color_red_title">Rot</string>
+    <string name="color_green_title">Grün</string>
+    <string name="color_blue_title">Blau</string>
+
+    <string name="category_touchkey_title">Tasten</string>
+    <string name="backlight_timeout_title_head">Beleuchtung</string>
+    <string name="backlight_timeout_summary_head">Verzögerung bis zum Abschalten der Tastenbeleuchtung einstellen</string>
+
+    <string name="category_radio_title">Funk</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">HSDPA/HSUPA aktivieren</string>
+</resources>

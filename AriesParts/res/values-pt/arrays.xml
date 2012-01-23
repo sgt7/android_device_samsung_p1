@@ -1,0 +1,45 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="backlight_timeout_entries">
+        <item>Padrão (1.6 segundos)</item>
+        <item>0.5 segundos</item>
+        <item>2 segundos</item>
+        <item>5 segundos</item>
+        <item>10 segundos</item>
+        <item>15 segundos</item>
+        <item>30 segundos</item>
+        <item>Nunca</item>
+    </string-array>
+
+    <string-array name="backlight_timeout_entries_values" translatable="false">
+        <item>1600</item>
+        <item>500</item>
+        <item>2000</item>
+        <item>5000</item>
+        <item>10000</item>
+        <item>15000</item>
+        <item>30000</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="hspa_entries">
+        <item>UMTS Apenas</item>
+        <item>HSDPA Apenas</item>
+        <item>HSDPA + HSUPA</item>
+    </string-array>
+
+    <string-array name="hspa_entries_values" translatable="false">
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+    </string-array>
+
+    <string-array name="tvout_system_entries">
+        <item>NTSC</item>
+        <item>PAL</item>
+    </string-array>
+
+    <string-array name="tvout_system_entries_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>

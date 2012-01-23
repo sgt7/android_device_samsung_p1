@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Configurações do Galaxy S</string>
+
+    <string name="category_screen_title">Tela</string>
+    <string name="color_tuning_title_head">Ajuste de Cor</string>
+    <string name="color_tuning_summary_head">Calibrar as cores da tela</string>
+    <string name="color_red_title">Vermelho</string>
+    <string name="color_green_title">Verde</string>
+    <string name="color_blue_title">Azul</string>
+
+    <string name="category_touchkey_title">Botões Touch</string>
+    <string name="backlight_timeout_title_head">Tempo Limite da Iluminação</string>
+    <string name="backlight_timeout_summary_head">Ajuste o tempo para desligar a iluminação dos Botões Touch</string>
+
+    <string name="category_radio_title">Radio</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">Ativar HSDPA/HSUPA</string>
+
+    <string name="category_tvout_title">Saída de TV</string>
+    <string name="tvout_enable_head">Saída de TV</string>
+    <string name="tvout_enable_summary_nocable">Cabo para Saída de TV não conectado</string>
+    <string name="tvout_enable_summary">Cabo para Saída de TV conectado, ative para usar</string>
+    <string name="tvout_enable_summary_on">Saída de TV ativada</string>
+    <string name="tvout_system_head">Sistema de TV</string>
+    <string name="tvout_system_summary">Ajuste seu sistema de TV para a Saída de TV</string>
+</resources>

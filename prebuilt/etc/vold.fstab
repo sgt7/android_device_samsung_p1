@@ -11,6 +11,9 @@
 ## part         - Partition # (1 based), or 'auto' for first usable partition.
 ## <sysfs_path> - List of sysfs paths to source devices
 ######################
-dev_mount sdcard /mnt/sdcard auto /devices/platform/s3c-sdhci.2/mmc_host/mmc1
+# internal sdcard
+dev_mount sdcard /mnt/sdcard 1 /devices/platform/s3c-sdhci.2/mmc_host/mmc1 /devices/platform/s3c-sdhci.2/mmc_host/mmc2
 
-dev_mount emmc /mnt/emmc 1 /devices/platform/s3c-sdhci.0/mmc_host/mmc0
+# external sdcard
+dev_mount emmc /mnt/emmc auto /devices/platform/s3c-sdhci.0/mmc_host/mmc0
+#end line ## keep this line
