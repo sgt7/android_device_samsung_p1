@@ -34,14 +34,12 @@
 
 <StorageList xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- removable is not set in nosdcard product -->
-    <storage android:mountPoint="/mnt/emmc"
-             android:storageDescription="External sdcard"
-             android:primary="true"
-             android:removable="true"
-            android:maxFileSize="4096" />
     <storage android:mountPoint="/mnt/sdcard"
-             android:storageDescription="Internal sdcard"
-             android:primary="false"
-             android:removable="true"
+             android:storageDescription="@string/storage_internal"
+             android:primary="true"
              android:maxFileSize="4096" />
+    <storage android:mountPoint="/mnt/emmc"
+             android:storageDescription="@string/storage_sd_card"
+             android:primary="false"
+            android:maxFileSize="4096" />
 </StorageList>
