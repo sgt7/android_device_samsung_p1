@@ -37,6 +37,7 @@
     <storage android:mountPoint="/mnt/emmc"
              android:storageDescription="External sdcard"
              android:primary="true"
+             android:removable="true"
             android:maxFileSize="4096" />
     <storage android:mountPoint="/mnt/sdcard"
              android:storageDescription="Internal sdcard"
