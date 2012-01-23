@@ -1,4 +1,4 @@
-package com.cyanogenmod.AriesParts;
+package com.cyanogenmod.P1Parts;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +30,7 @@ public class Hspa implements OnPreferenceChangeListener {
         }
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        sendIntent(context, sharedPrefs.getString(AriesParts.KEY_HSPA, "23"));
+        sendIntent(context, sharedPrefs.getString(P1Parts.KEY_HSPA, "23"));
     }
 
     @Override

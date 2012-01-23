@@ -4,7 +4,7 @@
 	<PreferenceCategory
     	android:title="@string/category_screen_title">
 	    <!-- Color tuning -->
-	    <com.cyanogenmod.AriesParts.ColorTuningPreference 
+	    <com.cyanogenmod.P1Parts.ColorTuningPreference 
 	        android:key="color_tuning"
 	        android:title="@string/color_tuning_title_head"
 	        android:summary="@string/color_tuning_summary_head" />

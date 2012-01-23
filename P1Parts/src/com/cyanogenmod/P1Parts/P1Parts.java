@@ -1,4 +1,4 @@
-package com.cyanogenmod.AriesParts;
+package com.cyanogenmod.P1Parts;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 
-public class AriesParts extends PreferenceActivity  {
+public class P1Parts extends PreferenceActivity  {
 
     public static final String KEY_COLOR_TUNING = "color_tuning";
     public static final String KEY_BACKLIGHT_TIMEOUT = "backlight_timeout";
@@ -61,7 +61,7 @@ public class AriesParts extends PreferenceActivity  {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 boolean enable = (Boolean) newValue;
-                Intent i = new Intent(AriesParts.this, TvOutService.class);
+                Intent i = new Intent(P1Parts.this, TvOutService.class);
                 i.putExtra(TvOutService.EXTRA_COMMAND, enable ? TvOutService.COMMAND_ENABLE : TvOutService.COMMAND_DISABLE);
                 startService(i);
                 return true;
@@ -76,7 +76,7 @@ public class AriesParts extends PreferenceActivity  {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 if (mTvOut._isEnabled()) {
                     int newSystem = Integer.valueOf((String) newValue);
-                    Intent i = new Intent(AriesParts.this, TvOutService.class);
+                    Intent i = new Intent(P1Parts.this, TvOutService.class);
                     i.putExtra(TvOutService.EXTRA_COMMAND, TvOutService.COMMAND_CHANGE_SYSTEM);
                     i.putExtra(TvOutService.EXTRA_SYSTEM, newSystem);
                     startService(i);

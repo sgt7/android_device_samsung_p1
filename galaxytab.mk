@@ -70,7 +70,7 @@ PRODUCT_PACKAGES += \
 
 # tvout
 PRODUCT_PACKAGES += \
-	AriesParts \
+	P1Parts \
 	tvouthack
 
 # These are the OpenMAX IL configuration files
@@ -144,7 +144,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
-       wifi.supplicant_scan_interval=20
+       wifi.supplicant_scan_interval=200
 
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector

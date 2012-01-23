@@ -1,4 +1,4 @@
-package com.cyanogenmod.AriesParts;
+package com.cyanogenmod.P1Parts;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

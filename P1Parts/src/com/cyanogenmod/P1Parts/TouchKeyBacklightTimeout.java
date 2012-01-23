@@ -1,4 +1,4 @@
-package com.cyanogenmod.AriesParts;
+package com.cyanogenmod.P1Parts;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,7 +24,7 @@ public class TouchKeyBacklightTimeout implements OnPreferenceChangeListener {
         }
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        Utils.writeValue(FILE, sharedPrefs.getString(AriesParts.KEY_BACKLIGHT_TIMEOUT, "1600"));
+        Utils.writeValue(FILE, sharedPrefs.getString(P1Parts.KEY_BACKLIGHT_TIMEOUT, "1600"));
     }
 
     @Override

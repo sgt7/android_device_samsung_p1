@@ -1,4 +1,4 @@
-package com.cyanogenmod.AriesParts;
+package com.cyanogenmod.P1Parts;
 
 import java.io.File;
 import java.io.FileNotFoundException;

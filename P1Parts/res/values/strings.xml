@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Galaxy S Settings</string>
+    <string name="app_name">Galaxy Tab Settings</string>
 
     <string name="category_screen_title">Screen</string>
     <string name="color_tuning_title_head">Color Tuning</string>
