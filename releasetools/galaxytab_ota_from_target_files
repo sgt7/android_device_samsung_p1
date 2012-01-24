@@ -73,7 +73,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.WriteRawImage("/tmp/zImage", "/dev/block/bml7")
   script.WriteRawImage("/tmp/zImage", "/dev/block/bml8")
 
-  script.Print("Converting filesystems(if not already ext4")
+  script.Print("Converting filesystems(if not already ext4)")
   script.AppendExtra('run_program("/tmp/updater.sh");')
 
   script.Print("Formatting system ...")
