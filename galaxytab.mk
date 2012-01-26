@@ -20,6 +20,7 @@ PRODUCT_COPY_FILES := \
 	device/samsung/galaxytab/prebuilt/etc/asound.conf:system/etc/asound.conf \
 	device/samsung/galaxytab/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg
 #device/samsung/galaxytab/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxytab/init.rc:root/init.rc \
@@ -41,9 +42,7 @@ PRODUCT_PACKAGES := \
 
 # Utilities
 PRODUCT_COPY_FILES += \
-    device/samsung/galaxytab/prebuilt/mke2fs:utilities/mke2fs \
-    device/samsung/galaxytab/prebuilt/redbend_ua:utilities/redbend_ua 
-# redbend_ua is a propreitary file, but we'll let it in here for now.
+    device/samsung/galaxytab/prebuilt/mke2fs:utilities/mke2fs
 
 # utils
 PRODUCT_PACKAGES += \
@@ -128,13 +127,14 @@ PRODUCT_COPY_FILES += \
 # Tablet!
 PRODUCT_CHARACTERISTICS := tablet
 
-# stuff
+# RIL
 PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.multiple=false \
        ro.telephony.call_ring.delay=3000 \
        ro.telephony.call_ring.absent=true \
        mobiledata.interfaces=pdp0,eth0,gprs,ppp0 \
        ro.telephony.ril.v3=datacall,icccardstatus \
+       ro.telephony.ril_class=SamsungRIL \
        ro.ril.enable.managed.roaming=1 \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
        ro.ril.emc.mode=2 \
