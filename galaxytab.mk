@@ -119,10 +119,10 @@ PRODUCT_COPY_FILES += \
 
 # firmware
 PRODUCT_COPY_FILES += \
-	device/samsung/galaxytab/prebuilt/firmware/CE147F00.bin:system/firmware/CE147F00.bin \
-	device/samsung/galaxytab/prebuilt/firmware/CE147F01.bin:system/firmware/CE147F01.bin \
-	device/samsung/galaxytab/prebuilt/firmware/CE147F02.bin:system/firmware/CE147F02.bin \
-	device/samsung/galaxytab/prebuilt/firmware/CE147F03.bin:system/firmware/CE147F03.bin
+	device/samsung/galaxytab/prebuilt/firmware/CE147F00.bin:system/vendor/firmware/CE147F00.bin \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F01.bin:system/vendor/firmware/CE147F01.bin \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F02.bin:system/vendor/firmware/CE147F02.bin \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F03.bin:system/vendor/firmware/CE147F03.bin
 
 # Tablet!
 PRODUCT_CHARACTERISTICS := tablet
