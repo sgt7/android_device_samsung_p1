@@ -19,15 +19,16 @@ DEVICE_PACKAGE_OVERLAYS := \
 PRODUCT_COPY_FILES := \
 	device/samsung/galaxytab/prebuilt/etc/asound.conf:system/etc/asound.conf \
 	device/samsung/galaxytab/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg
-#device/samsung/galaxytab/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+#	device/samsung/galaxytab/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxytab/init.rc:root/init.rc \
-	device/samsung/galaxytab/init.s5pc110.rc:root/init.s5pc110.rc \
-	device/samsung/galaxytab/init.s5pc110.usb.rc:root/init.s5pc110.usb.rc \
-	device/samsung/galaxytab/ueventd.rc:root/ueventd.rc \
-	device/samsung/galaxytab/lpm.rc:root/lpm.rc
+	device/samsung/galaxytab/init.p1.rc:root/init.s5pc110.rc \
+	device/samsung/galaxytab/init.p1.usb.rc:root/init.s5pc110.usb.rc \
+	device/samsung/galaxytab/ueventd.p1.rc:root/ueventd.p1.rc \
+	device/samsung/galaxytab/lpm.rc:root/lpm.rc \
+	device/samsung/galaxytab/setupdatadata.sh:root/sbin/setupdatadata.sh
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
@@ -38,11 +39,8 @@ PRODUCT_COPY_FILES += \
 # Filesystem management tools
 PRODUCT_PACKAGES := \
 	make_ext4fs \
-	setup_fs
-
-# Utilities
-PRODUCT_COPY_FILES += \
-    device/samsung/galaxytab/prebuilt/mke2fs:utilities/mke2fs
+	setup_fs \
+	bml_over_mtd
 
 # utils
 PRODUCT_PACKAGES += \
@@ -67,8 +65,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	bdaddr_read
 
-# tvout
+# tDevice-specific packages
 PRODUCT_PACKAGES += \
+	SamsungServiceMode \
 	P1Parts \
 	tvouthack
 
@@ -133,7 +132,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.delay=3000 \
        ro.telephony.call_ring.absent=true \
        mobiledata.interfaces=pdp0,eth0,gprs,ppp0 \
-       ro.telephony.ril.v3=datacall,icccardstatus \
+       ro.telephony.ril.v3=icccardstatus,datacall,signalstrength,facilitylock \
        ro.telephony.ril_class=SamsungRIL \
        ro.ril.enable.managed.roaming=1 \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
@@ -160,6 +159,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
     dalvik.vm.checkjni=false
 
+# Override /proc/sys/vm/dirty_ratio on UMS
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vold.umsdirtyratio=20
+
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
@@ -178,10 +181,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += $(foreach module,\
     $(filter-out $(RAMDISK_MODULES),$(wildcard device/samsung/galaxytab/modules/*.ko)),\
     $(module):system/lib/modules/$(notdir $(module)))
-
-# rfs converter
-PRODUCT_COPY_FILES += \
-    device/samsung/galaxytab/prebuilt/sbin/fat.format:root/sbin/fat.format
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
     LOCAL_KERNEL := device/samsung/galaxytab/kernel
