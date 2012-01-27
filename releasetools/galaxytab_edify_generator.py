@@ -17,7 +17,7 @@ import os, sys
 
 LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools/releasetools'))
-VENDOR_SAMSUNG_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../vendor/samsung'))
+VENDOR_SAMSUNG_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../vendor/samsung/galaxytab/proprietary'))
 
 import edify_generator
 
@@ -34,6 +34,10 @@ class EdifyGenerator(edify_generator.EdifyGenerator):
       self.script.append(
             ('package_extract_file("busybox", "/tmp/busybox");\n'
              'set_perm(0, 0, 0777, "/tmp/busybox");'))
+             
+      self.script.append(
+            ('package_extract_file("redbend_ua", "/tmp/redbend_ua");\n'
+             'set_perm(0, 0, 0777, "/tmp/redbend_ua");'))
 
       self.script.append('package_extract_file("zImage", "/tmp/zImage");')
 
@@ -42,6 +46,6 @@ class EdifyGenerator(edify_generator.EdifyGenerator):
     def RunBackup(self, command):
       edify_generator.EdifyGenerator.RunBackup(self, command)
 
-    def WriteRawImage(self, image, device):
+    def RedbendUA(self, image, device):
       self.script.append(
-          ('run_program("write_raw_image", "' + image + '", "' + device + '");'))
+          ('run_program("/tmp/redbend_ua", "restore", "' + image + '", "' + device + '");'))
