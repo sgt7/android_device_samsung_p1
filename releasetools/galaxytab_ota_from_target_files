@@ -23,6 +23,7 @@ RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools
 TARGET_DIR = os.getenv('OUT')
 UTILITIES_DIR = os.path.join(TARGET_DIR, 'utilities')
 KERNEL_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../kernel/samsung/p1/arch/arm/boot'))
+VENDOR_SAMSUNG_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../vendor/samsung/galaxytab/proprietary'))
 
 # Add releasetools directory to python path
 sys.path.append(RELEASETOOLS_DIR)
