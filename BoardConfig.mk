@@ -118,5 +118,5 @@ BOARD_USES_BML_OVER_MTD := true
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/galaxytab/shbootimg.mk
 TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /cache/.startrecovery; sync;"
 
-TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000
+TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000,GT-P1000L,GT-P1000N
 
