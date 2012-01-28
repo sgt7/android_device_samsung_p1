@@ -43,7 +43,7 @@ import zipfile
 if not hasattr(os, "SEEK_SET"):
   os.SEEK_SET = 0
 
-import galaxytab_common as common
+import aries_common as common
 
 OPTIONS = common.OPTIONS
 
@@ -90,7 +90,7 @@ def AddSystem(output_zip):
   """Turn the contents of SYSTEM into a system image and store it in
   output_zip."""
 
-  print "Galaxy Tab creating system.img..."
+  print "creating system.img..."
 
   img = tempfile.NamedTemporaryFile()
 

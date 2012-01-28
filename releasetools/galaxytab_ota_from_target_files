@@ -16,13 +16,12 @@
 
 import sys
 import os
-import galaxytab_common as common
+import aries_common as common
 
 LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools/releasetools'))
 TARGET_DIR = os.getenv('OUT')
 UTILITIES_DIR = os.path.join(TARGET_DIR, 'utilities')
-KERNEL_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../kernel/samsung/p1/arch/arm/boot'))
 
 # Add releasetools directory to python path
 sys.path.append(RELEASETOOLS_DIR)
@@ -33,9 +32,23 @@ filename = os.path.join(RELEASETOOLS_DIR, "ota_from_target_files")
 ota_from_target_files = common.load_module_from_file('ota_from_target_files', filename)
 
 from ota_from_target_files import *
-import galaxytab_edify_generator as edify_generator
+import aries_edify_generator as edify_generator
 
 __doc__ = ota_from_target_files.__doc__
+
+def CopyBootFiles(input_zip, output_zip):
+    output_zip.write(os.path.join(TARGET_DIR, "boot.img"),"boot.img")
+
+def CopyBMLoverMTD(output_zip):
+  """Copy the bml_over_mtd utility and script to the output."""
+  output_zip.write(os.path.join(TARGET_DIR, "modem.bin"),"modem.bin")
+  output_zip.write(os.path.join(UTILITIES_DIR, "make_ext4fs"),"make_ext4fs")
+  output_zip.write(os.path.join(UTILITIES_DIR, "busybox"),"busybox")
+  output_zip.write(os.path.join(UTILITIES_DIR, "flash_image"),"flash_image")
+  output_zip.write(os.path.join(UTILITIES_DIR, "erase_image"),"erase_image")
+  output_zip.write(os.path.join(UTILITIES_DIR, "bml_over_mtd"),"bml_over_mtd")
+  output_zip.write(os.path.join(LOCAL_DIR, "bml_over_mtd.sh"),"bml_over_mtd.sh")
+  output_zip.write(os.path.join(TARGET_DIR, "updater.sh"),"updater.sh")
 
 def WriteFullOTAPackage(input_zip, output_zip):
   # TODO: how to determine this?  We don't know what version it will
@@ -61,31 +74,21 @@ def WriteFullOTAPackage(input_zip, output_zip):
 #    ts = GetBuildProp("ro.build.date.utc", input_zip)
 #    script.AssertOlderBuild(ts)
 
+  # script.ShowProgress(0.15, 5) in device-specific assert as I could not get it to show up before it in here
+
   AppendAssertions(script, input_zip)
   device_specific.FullOTA_Assertions()
 
-  script.ShowProgress(0.5, 0)
+  if OPTIONS.backuptool:
+    script.RunBackup("backup")
 
   if OPTIONS.wipe_user_data:
     script.FormatPartition("/data")
 
-  script.Print("Flashing kernel ...")
-  script.RedbendUA("/tmp/zImage", "/dev/block/bml7")
-  script.RedbendUA("/tmp/zImage", "/dev/block/bml8")
-
-  script.Print("Converting filesystems(if not already ext4)")
-  script.AppendExtra('run_program("/tmp/updater.sh");')
-
-  script.Print("Formatting system ...")
-  #script.FormatPartition("/system")
-  script.AppendExtra('unmount("/system");')
-  script.AppendExtra('run_program("/tmp/mke2fs", "-m", "0", "-O", "has_journal,extent,huge_file,flex_bg,uninit_bg,dir_nlink,extra_isize", "-L", "system", "-M", "/system", "/dev/block/stl9");')
-  script.Print("Mounting system ...")
-  #script.Mount("/system")
-  #script.AppendExtra('mount("ext4", "", "/dev/block/stl9", "/system");')
-  script.AppendExtra('run_program("/tmp/busybox", "mount", "-t", "ext4", "/dev/block/stl9", "/system");')
-  script.ShowProgress(0.4, 0)
-  script.Print("Unpacking system ...")
+  script.FormatPartition("/system")
+  script.Mount("/system")
+  script.ShowProgress(0.7, 30);
+  script.UnpackPackageDir("recovery", "/system")
   script.UnpackPackageDir("system", "/system")
 
   (symlinks, retouch_files) = CopySystemFiles(input_zip, output_zip)
@@ -97,16 +100,12 @@ def WriteFullOTAPackage(input_zip, output_zip):
     script.UndoRetouchBinaries(retouch_files)
 
   Item.GetMetadata(input_zip)
+  script.ShowProgress(0.15, 5)
   Item.Get("system").SetPermissions(script)
 
-  script.ShowProgress(0.2, 0)
+  CopyBootFiles(input_zip, output_zip)
+  CopyBMLoverMTD(output_zip)
 
-  output_zip.write(os.path.join(KERNEL_DIR, "zImage"),"zImage")
-  output_zip.write(os.path.join(UTILITIES_DIR, "mke2fs"),"mke2fs")
-  output_zip.write(os.path.join(UTILITIES_DIR, "busybox"),"busybox")
-  output_zip.write(os.path.join(VENDOR_SAMSUNG_DIR, "redbend_ua"),"redbend_ua")
-
-  script.ShowProgress(0.1, 0)
   device_specific.FullOTA_InstallEnd()
 
   if OPTIONS.extra_script is not None:
