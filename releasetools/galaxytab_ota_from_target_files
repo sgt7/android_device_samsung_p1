@@ -16,7 +16,7 @@
 
 import sys
 import os
-import aries_common as common
+import galaxytab_common as common
 
 LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools/releasetools'))
@@ -32,7 +32,7 @@ filename = os.path.join(RELEASETOOLS_DIR, "ota_from_target_files")
 ota_from_target_files = common.load_module_from_file('ota_from_target_files', filename)
 
 from ota_from_target_files import *
-import aries_edify_generator as edify_generator
+import galaxytab_edify_generator as edify_generator
 
 __doc__ = ota_from_target_files.__doc__
 
