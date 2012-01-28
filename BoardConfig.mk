@@ -49,9 +49,7 @@ TARGET_RECOVERY_INITRC := device/samsung/galaxytab/recovery.rc
 
 TARGET_BOARD_PLATFORM := s5pc110
 TARGET_BOARD_PLATFORM_GPU := POWERVR_SGX540_120
-TARGET_BOOTLOADER_BOARD_NAME := s5pc110
-
-TARGET_PROVIDES_LIBAUDIO := true
+TARGET_BOOTLOADER_BOARD_NAME := p1
 
 # Releasetools
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/samsung/galaxytab/releasetools/galaxytab_ota_from_target_files
@@ -110,14 +108,15 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun%d/file
+BOARD_UMS_LUNFILE := /sys/class/android_usb/android0/f_mass_storage/lun/file
 
 # Recovery
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_NO_SELECT_BUTTON := true
+BOARD_USES_BML_OVER_MTD := true
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/galaxytab/shbootimg.mk
 TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /cache/.startrecovery; sync;"
 
 TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000
-
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun%d/file
 
