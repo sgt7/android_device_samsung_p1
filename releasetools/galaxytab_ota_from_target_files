@@ -32,7 +32,7 @@ filename = os.path.join(RELEASETOOLS_DIR, "ota_from_target_files")
 ota_from_target_files = common.load_module_from_file('ota_from_target_files', filename)
 
 from ota_from_target_files import *
-import vzwtab_edify_generator as edify_generator
+import galaxytab_edify_generator as edify_generator
 
 __doc__ = ota_from_target_files.__doc__
 
