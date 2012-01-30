@@ -6,3 +6,10 @@ wifi.interface=eth0
 rild.libpath=/system/lib/libsec-ril.so
 rild.libargs=-d /dev/ttys0
 
+#mounts
+ro.phone_storage=1
+ro.additionalmounts=/mnt/emmc
+ro.vold.switchablepair=/mnt/sdcard,/mnt/emmc
+persist.sys.vold.switchexternal=1
+
+
