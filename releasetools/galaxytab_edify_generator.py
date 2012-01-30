@@ -23,28 +23,23 @@ import edify_generator
 class EdifyGenerator(edify_generator.EdifyGenerator):
     def AssertDevice(self, device):
       edify_generator.EdifyGenerator.AssertDevice(self, device)
-
-      self.script.append('ui_print("Welcome to CyanogenMod 9 for Galaxy Tab");')
-      self.script.append('ui_print("The TE4M");')
-
+      self.script.append('ui_print("Checking File systems");')
       self.script.append(
-           ('package_extract_file("mke2fs", "/tmp/mke2fs");\n'
-            'set_perm(0, 0, 0777, "/tmp/mke2fs");'))
+            ('package_extract_file("updater.sh", "/tmp/updater.sh");\n'
+             'set_perm(0, 0, 0777, "/tmp/updater.sh");'))
+      self.script.append(
+           ('package_extract_file("make_ext4fs", "/tmp/make_ext4fs");\n'
+            'set_perm(0, 0, 0777, "/tmp/make_ext4fs");'))
       self.script.append(
             ('package_extract_file("busybox", "/tmp/busybox");\n'
              'set_perm(0, 0, 0777, "/tmp/busybox");'))
-             
       self.script.append(
-            ('package_extract_file("redbend_ua", "/tmp/redbend_ua");\n'
-             'set_perm(0, 0, 0777, "/tmp/redbend_ua");'))
-
-      self.script.append('package_extract_file("zImage", "/tmp/zImage");')
-
-      self.script.append('package_extract_file("updater.sh", "/tmp/updater.sh");')
+            ('package_extract_file("bmlwrite", "/tmp/bmlwrite");\n'
+             'set_perm(0, 0, 0777, "/tmp/bmlwrite");'))
+      self.script.append('package_extract_file("boot.img", "/tmp/boot.img");')
+      self.script.append('assert(run_program("/tmp/updater.sh") == 0);')
+      self.script.append('ui_print("Converting Filesystems to ext4 complete");')
+      self.script.append('ui_print("Installing system...");')
 
     def RunBackup(self, command):
       edify_generator.EdifyGenerator.RunBackup(self, command)
-
-    def RedbendUA(self, image, device):
-      self.script.append(
-          ('run_program("/tmp/redbend_ua", "restore", "' + image + '", "' + device + '");'))

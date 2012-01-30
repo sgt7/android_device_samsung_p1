@@ -22,8 +22,6 @@ LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file_
 RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools/releasetools'))
 TARGET_DIR = os.getenv('OUT')
 UTILITIES_DIR = os.path.join(TARGET_DIR, 'utilities')
-KERNEL_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../kernel/samsung/p1/arch/arm/boot'))
-VENDOR_SAMSUNG_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../vendor/samsung/galaxytab/proprietary'))
 
 # Add releasetools directory to python path
 sys.path.append(RELEASETOOLS_DIR)
@@ -34,9 +32,19 @@ filename = os.path.join(RELEASETOOLS_DIR, "ota_from_target_files")
 ota_from_target_files = common.load_module_from_file('ota_from_target_files', filename)
 
 from ota_from_target_files import *
-import galaxytab_edify_generator as edify_generator
+import vzwtab_edify_generator as edify_generator
 
 __doc__ = ota_from_target_files.__doc__
+
+def CopyBootFiles(input_zip, output_zip):
+    output_zip.write(os.path.join(TARGET_DIR, "boot.img"),"boot.img")
+
+def CopyUpdaterFiles(output_zip):
+  """Copy some utilities needed for updater."""
+  output_zip.write(os.path.join(UTILITIES_DIR, "make_ext4fs"),"make_ext4fs")
+  output_zip.write(os.path.join(UTILITIES_DIR, "busybox"),"busybox")
+  output_zip.write(os.path.join(LOCAL_DIR, "updater.sh"),"updater.sh")
+  output_zip.write(os.path.join(UTILITIES_DIR, "bmlwrite"),"bmlwrite")
 
 def WriteFullOTAPackage(input_zip, output_zip):
   # TODO: how to determine this?  We don't know what version it will
@@ -58,10 +66,6 @@ def WriteFullOTAPackage(input_zip, output_zip):
       metadata=metadata,
       info_dict=OPTIONS.info_dict)
 
-#  if not OPTIONS.omit_prereq:
-#    ts = GetBuildProp("ro.build.date.utc", input_zip)
-#    script.AssertOlderBuild(ts)
-
   AppendAssertions(script, input_zip)
   device_specific.FullOTA_Assertions()
 
@@ -70,43 +74,21 @@ def WriteFullOTAPackage(input_zip, output_zip):
   if OPTIONS.wipe_user_data:
     script.FormatPartition("/data")
 
-  script.Print("Flashing kernel ...")
-  script.RedbendUA("/tmp/zImage", "/dev/block/bml7")
-  script.RedbendUA("/tmp/zImage", "/dev/block/bml8")
-
-  script.Print("Converting filesystems(if not already ext4)")
-  script.AppendExtra('run_program("/tmp/updater.sh");')
-
-  script.Print("Formatting system ...")
-  #script.FormatPartition("/system")
-  script.AppendExtra('unmount("/system");')
-  script.AppendExtra('run_program("/tmp/mke2fs", "-m", "0", "-O", "has_journal,extent,huge_file,flex_bg,uninit_bg,dir_nlink,extra_isize", "-L", "system", "-M", "/system", "/dev/block/stl9");')
-  script.Print("Mounting system ...")
-  #script.Mount("/system")
-  #script.AppendExtra('mount("ext4", "", "/dev/block/stl9", "/system");')
-  script.AppendExtra('run_program("/tmp/busybox", "mount", "-t", "ext4", "/dev/block/stl9", "/system");')
-  script.ShowProgress(0.4, 0)
-  script.Print("Unpacking system ...")
+  script.FormatPartition("/system")
+  script.Mount("/system")
+  script.UnpackPackageDir("recovery", "/system")
   script.UnpackPackageDir("system", "/system")
 
   (symlinks, retouch_files) = CopySystemFiles(input_zip, output_zip)
   script.MakeSymlinks(symlinks)
 
-  if OPTIONS.aslr_mode:
-    script.RetouchBinaries(retouch_files)
-  else:
-    script.UndoRetouchBinaries(retouch_files)
+  CopyBootFiles(input_zip, output_zip)
+  CopyUpdaterFiles(output_zip)
 
   Item.GetMetadata(input_zip)
   Item.Get("system").SetPermissions(script)
 
   script.ShowProgress(0.2, 0)
-
-  output_zip.write(os.path.join(KERNEL_DIR, "zImage"),"zImage")
-  output_zip.write(os.path.join(UTILITIES_DIR, "mke2fs"),"mke2fs")
-  output_zip.write(os.path.join(UTILITIES_DIR, "busybox"),"busybox")
-  output_zip.write(os.path.join(VENDOR_SAMSUNG_DIR, "redbend_ua"),"redbend_ua")
-
   script.ShowProgress(0.1, 0)
   device_specific.FullOTA_InstallEnd()
 
@@ -120,10 +102,9 @@ ota_from_target_files.WriteFullOTAPackage = WriteFullOTAPackage
 
 
 def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
-    print "Incremental OTA Packages are not support on the Samsung Galaxy Tab at this time"
+    print "Incremental OTA Packages are not supported on the Galaxy Tab at this time"
     sys.exit(1)
 ota_from_target_files.WriteIncrementalOTAPackage = WriteIncrementalOTAPackage
-
 
 if __name__ == '__main__':
   try:
