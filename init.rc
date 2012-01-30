@@ -25,10 +25,11 @@ loglevel 9
     export ANDROID_ROOT /system
     export ANDROID_ASSETS /system/app
     export ANDROID_DATA /data
-    export PHONE_STORAGE /mnt/sdcard
-    export EXTERNAL_STORAGE /mnt/emmc
+    export PHONE_STORAGE /mnt/emmc
+    export EXTERNAL_STORAGE /mnt/sdcard
     export ASEC_MOUNTPOINT /mnt/asec
     export SD_EXT_DIRECTORY /sd-ext
+    export SECONDARY_STORAGE /mnt/emmc
     export USBHOST_STORAGE /mnt/sdcard/otg_disk
     export BOOTCLASSPATH /system/framework/core.jar:/system/framework/core-junit.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/apache-xml.jar:/system/framework/filterfw.jar
     export LOOP_MOUNTPOINT /mnt/obb 
@@ -47,6 +48,7 @@ loglevel 9
     insmod /lib/modules/j4fs.ko
     insmod /lib/modules/fuse.ko
     insmod /lib/modules/storage.ko
+    insmod /lib/modules/nls_utf8.ko
 
 # Backwards Compatibility
     symlink /system/etc /etc
@@ -132,11 +134,6 @@ loglevel 9
     chown root system /proc/sysrq-trigger
     chmod 0220 /proc/sysrq-trigger
 
-    chown gps root /sys/class/sec/gps/GPS_PWR_EN/value
-    chmod 660 /sys/class/sec/gps/GPS_PWR_EN/value
-    chown gps root /sys/class/sec/gps/GPS_nRST/value
-    chmod 660 /sys/class/sec/gps/GPS_nRST/value
-
     chmod 0662 /dev/log/radio
     chmod 0662 /dev/log/main
     chmod 0662 /dev/log/event
@@ -214,10 +211,12 @@ on post-fs
     insmod /lib/modules/cifs.ko
     insmod /lib/modules/hotspot_event_monitoring.ko
     insmod /lib/modules/tun.ko
-    insmod /lib/modules/nls_utf8.ko
 
 # Remove /sbin/sh so that "adb install" can work properly
     exec /sbin/setupenv.sh
+
+# Symlinks for samsung RIL
+    symlink /radio/modem.bin /dev/block/bml12
 
 # Data
 	chown system system /data
@@ -327,6 +326,8 @@ on post-fs
     chmod 0775 /efs
     mkdir /data/radio 0775 radio radio
     mkdir /data/radio/log 0775 radio radio
+    chmod 770 /efs/bluetooth
+    chmod 770 /efs/imei
 
 # Create resource-cache and double-check the perms
     mkdir /data/resource-cache 0771 system system
@@ -451,8 +452,10 @@ on boot
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
-    setprop net.tcp.buffersize.wifi    4095,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
+    setprop net.tcp.buffersize.lte     524288,1048576,2097152,262144,524288,1048576
     setprop net.tcp.buffersize.umts    4094,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.hspa    4094,87380,262144,4096,16384,262144
     setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
     setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
 
@@ -498,12 +501,11 @@ on boot
     chown compass root /sys/class/input/input3/threshold
     chmod 660 /sys/class/sec/uart_switch/UART_SEL/value
 
-# create data/gps for GPS demon
-	mkdir /data/gps 771 gps system
-	chown gps system /data/gps
-    chmod 0771 /data/gps
-	chmod 0755 /system/vendor/bin/gpsd
-	chmod 0755 /system/vendor/etc/gps.xml
+# Create data/gps for GPS demon
+    mkdir /data/gps 700 gps system
+    chown gps system /data/gps
+    chown gps root /sys/class/sec/gps/GPS_PWR_EN/value
+    chmod 660 /sys/class/sec/gps/GPS_PWR_EN/value
 
 # Change permission for compass
     chown compass input /sys/class/input/input3/offsets
@@ -533,12 +535,6 @@ write /sys/class/android_usb/android0/enable 1
     class_start core
     class_start main
 
-on nonencrypted
-    class_start late_start
-
-on charger
-    class_start charger
-
 on property:vold.decrypt=trigger_reset_main
     class_reset main
 
@@ -553,10 +549,8 @@ on property:vold.decrypt=trigger_restart_min_framework
 
 on property:vold.decrypt=trigger_restart_framework
     class_start main
-    class_start late_start
 
 on property:vold.decrypt=trigger_shutdown_framework
-    class_reset late_start
     class_reset main
 
 # ===============================================================================
@@ -612,11 +606,11 @@ service pvrsrvinit /system/bin/pvrsrvinit
    group root
    oneshot
 
-#service bdaddr /system/bin/bdaddr_read
-#    class main
-#    user root
-#    disabled
-#    oneshot
+service bdaddr /system/bin/bdaddr_read
+    class main
+    user root
+    disabled
+    oneshot
 
 on property:init.svc.bootanim=running
     start bdaddr
@@ -625,14 +619,22 @@ on property:init.svc.bootanim=running
 service servicemanager /system/bin/servicemanager
     class core
     user system
+    group system
     critical
     onrestart restart zygote
     onrestart restart media
+    onrestart restart surfaceflinger
+    onrestart restart drm
 
-#service tvout /system/bin/tvoutserver
-#	class core
-#	user system
-#	group graphics
+service tvout /system/bin/tvoutserver
+    class main
+	user system
+	group graphics
+
+service tvouthack /system/bin/tvouthack
+	class main
+    user root system
+    group system graphics
 
 service vold /system/bin/vold
     class core
@@ -654,8 +656,8 @@ service ril-daemon /system/bin/rild -l /system/lib/libsec-ril.so -- -d /dev/ttyS
     class main
     socket rild stream 660 root radio system
     socket rild-debug stream 660 radio system
-    user root
-    group radio cache inet misc audio
+    user root system
+    group radio cache inet misc audio sdcard_rw log
 
 service surfaceflinger /system/bin/surfaceflinger
     class main
@@ -687,17 +689,17 @@ service debuggerd /system/bin/debuggerd
 
 # Latin MobileTV [ISDBT]
 #service mobileTV /system/bin/broadcastProcessObserver
-#    class core
+#    class main
 #    user system
 #    group system audio camera graphics inet net_bt net_bt_admin net_raw sdcard_rw
 
 #service mtvmf /system/bin/mtvmfservice
-#    class core
+#    class main
 #    user system
 #    group system audio camera graphics inet net_bt net_bt_admin net_raw sdcard_rw
 
 #service mtvmfrec /system/bin/mtvmfrecservice
-#    class core
+#    class main
 #    user system
 #    group system audio camera graphics inet net_bt net_bt_admin net_raw sdcard_rw
 
@@ -724,8 +726,7 @@ service bootanim /system/bin/bootanimation
     disabled
     oneshot
 
-# wifi
-service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/wpa_supplicant.conf
+service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/etc/wpa_supplicant.conf
     class main
     socket wpa_eth0 dgram 0660 wifi wifi
     disabled
@@ -751,13 +752,12 @@ service ifcfg_eth0 /system/bin/ifconfig eth0 up
 #    disabled
 #    oneshot
 
-service hciattach /system/bin/brcm_patchram_plus -d --enable_hci --baudrate 3000000 \
-    --patchram /system/bin/BCM4329B1_002.002.023.0534.0571.hcd /dev/s3c2410_serial0
+service hciattach /system/bin/brcm_patchram_plus -d --enable_hci --i2s=1,0,0,0 \
+    --baudrate 3000000 --patchram /system/bin/BCM4329B1_002.002.023.0534.0590.hcd /dev/s3c2410_serial0
     class main
     user bluetooth
     group bluetooth net_bt_admin
     disabled
-    oneshot
 
 service dbus /system/bin/dbus-daemon --system --nofork
     class main
@@ -771,7 +771,7 @@ service iprenew_bnep0 /system/bin/dhcpcd -n
     disabled
     oneshot
 
-service bluetoothd /system/bin/logwrapper /system/bin/bluetoothd -n /system/etc/bluetooth/main.conf
+service bluetoothd /system/bin/bluetoothd -n
     class main
     socket bluetooth stream 660 bluetooth bluetooth
     socket dbus_bluetooth stream 660 bluetooth bluetooth
@@ -837,21 +837,23 @@ service drm /system/bin/logwrapper /system/bin/drmserver
     user drm root system
     group root system inet drmrpc
 
-service dumpstate /system/bin/dumpstate -s
+# bugreport is triggered by holding down volume down, volume up and power
+service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
     class main
     socket dumpstate stream 0660 shell log
     disabled
     oneshot
 
-service 3g_route /system/xbin/route add default dev pdp0
-    class main
-    disabled
-    oneshot
+#service 3g_route /system/xbin/route add default dev pdp0
+#    class main
+#    user root system
+#    group root system
 
 service orientationd /system/vendor/bin/orientationd
     class main
     user compass
     group system input
+    disabled
 
 service geomagneticd /system/vendor/bin/geomagneticd
     class main
@@ -863,3 +865,11 @@ service reboot /system/xbin/shutdown -r
     class main
     disabled
     oneshot
+
+# adb over network
+on property:service.adb.tcp.port=5555
+    stop adbd
+    start adbd
+on property:service.adb.tcp.port=-1
+    stop adbd
+    start adbd
