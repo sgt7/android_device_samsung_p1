@@ -181,4 +181,5 @@
     <!-- Max number of downloads allowed to proceed concurrently -->
     <integer name="config_MaxConcurrentDownloadsAllowed">10</integer>
 
+    <bool name="config_forceDisableHardwareKeyboard">true</bool>
 </resources>
