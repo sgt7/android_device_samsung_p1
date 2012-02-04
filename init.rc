@@ -518,6 +518,8 @@ on boot
 
 
 # Permissions for bluetooth.
+    setprop ro.bt.bdaddr_path "/efs/imei/bt.txt"
+    chown bluetooth bluetooth ro.bt.bdaddr_path
     chown bluetooth bluetooth /dev/s3c2410_serial0
     chmod 0600 /dev/s3c2410_serial0
     chmod 0660 /sys/class/rfkill/rfkill0/state
