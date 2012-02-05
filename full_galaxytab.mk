@@ -29,6 +29,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 # Galaxy Tab uses high-density artwork where available
 PRODUCT_LOCALES += hdpi
 
+# Screen size is "large" 7'tablet, density is "hdpi"
+PRODUCT_AAPT_CONFIG := large hdpi
+
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := full_galaxytab
 PRODUCT_DEVICE := galaxytab
