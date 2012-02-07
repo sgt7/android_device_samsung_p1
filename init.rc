@@ -18,8 +18,8 @@ sysclktz 0
 loglevel 9
 
 # Setup the global environment
-    export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
-    export LD_LIBRARY_PATH /vendor/lib:/system/lib
+    export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/data/bin:/data/sbin
+    export LD_LIBRARY_PATH /vendor/lib:/system/lib:/data/lib
     export ANDROID_BOOTLOGO 1
     export ANDROID_CACHE /cache
     export ANDROID_ROOT /system
