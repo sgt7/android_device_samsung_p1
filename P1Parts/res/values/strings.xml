@@ -24,4 +24,11 @@
     <string name="tvout_enable_summary_on">TV Out enabled</string>
     <string name="tvout_system_head">TV System</string>
     <string name="tvout_system_summary">Set your TV system for TV Out</string>
+
+    <string name="credits_title">View Credits</string>
+    <string name="credits_dialog">Credits</string>
+    <string name="credits_loading">Loading Credits ...\u2026</string>
+    <string name="credits_error">Error loading Credits\u2026</string>
+    <string name="credits_unknown">Unknown</string>
+    <string name="credits_version">Version</string>
 </resources>

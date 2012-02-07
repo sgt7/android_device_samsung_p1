@@ -51,4 +51,15 @@
 			android:entryValues="@array/tvout_system_entries_values"
 			android:defaultValue="2" />
 	</PreferenceCategory>
+
+	<PreferenceCategory
+        android:title="@string/credits_title">
+
+        </PreferenceCategory>
+        <PreferenceScreen android:key="credits_settings"
+        android:title="@string/credits_title">
+                <intent android:action="android.intent.action.MAIN"
+                        android:targetPackage="com.cyanogenmod.P1Parts"
+                        android:targetClass="com.cyanogenmod.P1Parts.Credits" />
+        </PreferenceScreen>
 </PreferenceScreen>

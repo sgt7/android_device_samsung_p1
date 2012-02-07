@@ -20,5 +20,10 @@
          </intent-filter>
       </receiver>
       <service android:name=".TvOutService" />
+      <activity android:name=".Credits">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+      </activity>
    </application>
 </manifest>
