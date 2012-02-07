@@ -127,6 +127,10 @@ PRODUCT_COPY_FILES += \
 	device/samsung/galaxytab/prebuilt/firmware/CE147F02.bin:system/vendor/firmware/CE147F02.bin \
 	device/samsung/galaxytab/prebuilt/firmware/CE147F03.bin:system/vendor/firmware/CE147F03.bin
 
+# Credits
+PRODUCT_COPY_FILES += \
+	device/samsung/galaxytab/Credits-CM.html:system/etc/Credits-CM.html
+
 # Tablet!
 PRODUCT_CHARACTERISTICS := tablet
 
