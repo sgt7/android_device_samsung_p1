@@ -27,7 +27,7 @@
     <bool name="config_enableLockScreenRotation">true</bool>
 
     <!-- see comment in values/config.xml -->
-    <integer name="config_longPressOnHomeBehavior">0</integer>
+    <integer name="config_longPressOnHomeBehavior">2</integer>
 
     <!-- see comment in values/config.xml -->
     <dimen name="config_prefDialogWidth">580dp</dimen>

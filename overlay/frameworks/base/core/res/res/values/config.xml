@@ -60,7 +60,18 @@
          should be empty.  An example would be "softap.*" -->
     <string-array translatable="false" name="config_tether_wifi_regexs">
         <item>"wl0.1"</item>
+        <item>"softap.*"</item>
     </string-array>
+
+    <!-- Array of ConnectivityManager.TYPE_xxxx values allowable for tethering -->
+    <!-- Common options are [1, 4] for TYPE_WIFI and TYPE_MOBILE_DUN or
+    <!== [0,1,5,7] for TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI and TYPE_BLUETOOTH -->
+    <integer-array translatable="false" name="config_tether_upstream_types">
+        <item>0</item>
+        <item>1</item>
+        <item>4</item>
+        <item>5</item>
+    </integer-array>
 
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
@@ -152,7 +163,7 @@
     <string name="config_geocodeProvider">com.google.android.location.GeocodeProvider</string>
 
     <!-- The default iface on which to monitor data use -->
-    <string name="config_datause_iface">ppp0</string>
+    <string name="config_datause_iface">pdp0</string>
 
     <!-- CRT Screen off animation -->
     <bool name="config_animateScreenLights">true</bool>

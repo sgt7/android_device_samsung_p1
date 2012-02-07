@@ -169,7 +169,7 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-	persist.sys.usb.config=mtp,adb
+	persist.sys.usb.config=mass_storage,adb
 
 # kernel modules for ramdisk
 PRODUCT_COPY_FILES += \
