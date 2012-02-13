@@ -10,6 +10,6 @@ rild.libargs=-d /dev/ttys0
 ro.phone_storage=1
 ro.additionalmounts=/mnt/emmc
 ro.vold.switchablepair=/mnt/sdcard,/mnt/emmc
-persist.sys.vold.switchexternal=1
+persist.sys.vold.switchexternal=0
 
 
