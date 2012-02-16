@@ -271,8 +271,8 @@ void CameraHardwareSec::initDefaultParameters(int cameraId)
         parameterString.append(CameraParameters::SCENE_MODE_PARTY);
         parameterString.append(",");
         parameterString.append(CameraParameters::SCENE_MODE_CANDLELIGHT);
-        p.set(CameraParameters::KEY_SUPPORTED_SCENE_MODES,
-              parameterString.string());
+        //p.set(CameraParameters::KEY_SUPPORTED_SCENE_MODES,
+        //      parameterString.string());
         p.set(CameraParameters::KEY_SCENE_MODE,
               CameraParameters::SCENE_MODE_AUTO);
 
