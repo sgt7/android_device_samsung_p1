@@ -122,6 +122,7 @@ TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/galaxytab/shbootimg.mk
 TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /cache/.startrecovery; sync; echo "
+BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/galaxytab/recovery/graphics.c
 
 TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000
 
