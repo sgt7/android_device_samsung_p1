@@ -23,6 +23,7 @@
 
 #include "SecCameraHWInterface.h"
 #include "SecCameraUtils.h"
+
 #include <utils/threads.h>
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -272,6 +273,7 @@ void CameraHardwareSec::initDefaultParameters(int cameraId)
         parameterString.append(CameraParameters::SCENE_MODE_PARTY);
         parameterString.append(",");
         parameterString.append(CameraParameters::SCENE_MODE_CANDLELIGHT);
+        // TODO: CE147 doesn't understand scene mode
         //p.set(CameraParameters::KEY_SUPPORTED_SCENE_MODES,
         //      parameterString.string());
         p.set(CameraParameters::KEY_SCENE_MODE,
@@ -284,10 +286,16 @@ void CameraHardwareSec::initDefaultParameters(int cameraId)
         p.set(CameraParameters::KEY_PREVIEW_FPS_RANGE, "15000,30000");
 
         p.set(CameraParameters::KEY_FOCAL_LENGTH, "3.43");
-        
-        // touch to focus
+
+        // touch focus
         p.set(CameraParameters::KEY_MAX_NUM_FOCUS_AREAS, "1");
         p.set(CameraParameters::KEY_FOCUS_AREAS, "(0,0,0,0,0)");
+
+        // zoom
+        p.set(CameraParameters::KEY_ZOOM, "0");
+        p.set(CameraParameters::KEY_MAX_ZOOM, "12");
+        p.set(CameraParameters::KEY_ZOOM_RATIOS, "100,125,150,175,200,225,250,275,300,325,350,375,400");
+        p.set(CameraParameters::KEY_ZOOM_SUPPORTED, CameraParameters::TRUE);
     } else {
         p.set(CameraParameters::KEY_SUPPORTED_PREVIEW_FPS_RANGE, "(7500,30000)");
         p.set(CameraParameters::KEY_PREVIEW_FPS_RANGE, "7500,30000");
@@ -849,7 +857,7 @@ int CameraHardwareSec::autoFocusThread()
         mFocusLock.unlock();
         LOGV("%s : exiting on request0", __func__);
         return NO_ERROR;
-    }// touch to focus
+    }
     mFocusCondition.wait(mFocusLock);
     /* check early exit request */
     if (mExitAutoFocusThread) {
@@ -1560,7 +1568,7 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
             new_white = WHITE_BALANCE_SUNNY;
         else if (!strcmp(new_white_str,
                          CameraParameters::WHITE_BALANCE_CLOUDY_DAYLIGHT))
-            new_white = WHITE_BALANCE_CLOUDY_DAYLIGHT;
+            new_white = WHITE_BALANCE_CLOUDY;
         else if (!strcmp(new_white_str,
                          CameraParameters::WHITE_BALANCE_FLUORESCENT))
             new_white = WHITE_BALANCE_FLUORESCENT;
@@ -1768,7 +1776,7 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
         // touch to focus
         const char *new_focus_area = params.get(CameraParameters::KEY_FOCUS_AREAS);
         if (new_focus_area != NULL) {
-            LOGI("focus area: %s", new_focus_area);
+            LOGV("focus area: %s", new_focus_area);
             SecCameraArea area(new_focus_area);
 
             if (!area.isDummy()) {
@@ -1778,7 +1786,7 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
                 int x = area.getX(width);
                 int y = area.getY(height);
 
-                LOGI("area=%s, x=%i, y=%i", area.toString8().string(), x, y);
+                LOGV("area=%s, x=%i, y=%i", area.toString8().string(), x, y);
                 if (mSecCamera->setObjectPosition(x, y) < 0) {
                     LOGE("ERR(%s):Fail on mSecCamera->setObjectPosition(%s)", __func__, new_focus_area);
                     ret = UNKNOWN_ERROR;
@@ -1786,6 +1794,24 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
             }
 
             int val = area.isDummy() ? 0 : 1;
+            if (mSecCamera->setTouchAFStartStop(val) < 0) {
+                LOGE("ERR(%s):Fail on mSecCamera->setTouchAFStartStop(%d)", __func__, val);
+                ret = UNKNOWN_ERROR;
+            }
+        }
+
+        // zoom
+        int new_zoom = params.getInt(CameraParameters::KEY_ZOOM);
+        int max_zoom = params.getInt(CameraParameters::KEY_MAX_ZOOM);
+        LOGV("%s : new_zoom %d", __func__, new_zoom);
+        if (0 <= new_zoom && new_zoom <= max_zoom) {
+            LOGV("%s : set zoom:%d\n", __func__, new_zoom);
+            if (mSecCamera->setZoom(new_zoom) < 0) {
+                LOGE("ERR(%s):Fail on mSecCamera->setZoom(%d)", __func__, new_zoom);
+                ret = UNKNOWN_ERROR;
+            } else {
+                mParameters.set(CameraParameters::KEY_ZOOM, new_zoom);
+            }
         }
     } else {
         if (!isSupportedParameter(new_focus_mode_str,
@@ -2050,6 +2076,12 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
             ret = UNKNOWN_ERROR;
         }
     }
+
+    if (mSecCamera->setBatchReflection()) {
+        LOGE("ERR(%s):Fail on mSecCamera->setBatchReflection()", __func__);
+        ret = UNKNOWN_ERROR;
+    }
+
     LOGV("%s return ret = %d", __func__, ret);
 
     return ret;
