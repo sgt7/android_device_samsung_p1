@@ -114,11 +114,12 @@ BOARD_UMS_LUNFILE := /sys/class/android_usb/android0/f_mass_storage/lun/file
 
 # Recovery
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRX_8888"
+BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/galaxytab/recovery/graphics.c
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USES_BML_OVER_MTD := true
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/galaxytab/shbootimg.mk
-TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /cache/.startrecovery; sync;"
+TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /cache/.startrecovery; sync; echo "
 
 TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000,GT-P1000L,GT-P1000N
 
