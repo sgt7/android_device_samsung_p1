@@ -740,9 +740,9 @@ int SecCamera::startPreview(void)
     /* enum_fmt, s_fmt sample */
     int ret = fimc_v4l2_enum_fmt(m_cam_fd,m_preview_v4lformat);
     CHECK(ret);
-
+    
     if (m_camera_id == CAMERA_ID_BACK)
-        ret = fimc_v4l2_s_fmt(m_cam_fd, m_preview_width,m_preview_height,m_preview_v4lformat, 0);
+    ret = fimc_v4l2_s_fmt(m_cam_fd, m_preview_width,m_preview_height,m_preview_v4lformat, 0);
     else
         ret = fimc_v4l2_s_fmt(m_cam_fd, m_preview_height,m_preview_width,m_preview_v4lformat, 0);
     CHECK(ret);
@@ -761,6 +761,14 @@ int SecCamera::startPreview(void)
         /* VT mode setting */
         ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_VT_MODE, m_vtmode);
         CHECK(ret);
+
+        m_anti_banding = ANTI_BANDING_50HZ;
+        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_ANTI_BANDING, m_anti_banding);
+        CHECK(ret);
+
+        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_CHECK_FLIP, 0);
+        CHECK(ret);
+
     }
 
     /* start with all buffers in queue */
@@ -769,67 +777,41 @@ int SecCamera::startPreview(void)
         CHECK(ret);
     }
 
-    if (m_camera_id == CAMERA_ID_BACK) {
-        // Init some parameters required for CE147
-        // Force antibanding for back camera - only value supported
-        m_anti_banding = ANTI_BANDING_50HZ;
-
-        // It doesn't hurt to keep these on as the kernel camera driver only
-        // enables it when recording HD video. Turning it on before recording
-        // doesn't work because it needs to be set before the preview is started.
-        m_video_gamma = GAMMA_ON;
-        m_slow_ae = SLOW_AE_ON;
-
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_ANTI_BANDING, m_anti_banding);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_ISO, m_params->iso);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_BRIGHTNESS, m_params->brightness);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_FRAME_RATE, m_params->capture.timeperframe.denominator);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_METERING, m_params->metering);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SET_GAMMA, m_video_gamma);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SET_SLOW_AE, m_slow_ae);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_EFFECT, m_params->effects);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_WHITE_BALANCE, m_params->white_balance);
-        CHECK(ret);
-    }
-
     ret = fimc_v4l2_streamon(m_cam_fd);
     CHECK(ret);
 
-    if (m_camera_id == CAMERA_ID_BACK) {
-        // More parameters for CE147
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_FOCUS_MODE, m_params->focus_mode);
-        CHECK(ret);
-        // TODO
-        m_face_detect = 0;
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_FACE_DETECTION, m_face_detect);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SHARPNESS, m_params->sharpness);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SATURATION, m_params->saturation);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_CONTRAST, m_params->contrast);
-        CHECK(ret);
-        // TODO
-        m_beauty_shot = 0;
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_BEAUTY_SHOT, m_beauty_shot);
-        CHECK(ret);
-        // TODO
-        m_zoom_level = 0;
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_ZOOM, m_zoom_level);
-        CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_BATCH_REFLECTION, 1);
-        CHECK(ret);
-    }
-
     m_flag_camera_start = 1;
+
+if (m_camera_id == CAMERA_ID_BACK) {
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SCENE_MODE, m_params->scene_mode);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_WHITE_BALANCE, m_params->white_balance);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_EFFECT, m_params->effects);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_FRAME_RATE, m_params->capture.timeperframe.denominator);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_METERING, m_params->metering);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SATURATION, m_params->saturation);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_FOCUS_MODE, m_params->focus_mode);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_CONTRAST, m_params->contrast);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SENSOR_MODE, 0);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_ISO, m_params->iso);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_BRIGHTNESS, m_params->brightness);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SHARPNESS, m_params->sharpness);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_FLASH_MODE, m_params->flash_mode);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_APP_CHECK, 0);
+    CHECK(ret);
+}
 
     ret = fimc_v4l2_s_parm(m_cam_fd, &m_streamparm);
     CHECK(ret);
@@ -842,11 +824,8 @@ int SecCamera::startPreview(void)
         CHECK(ret);
     }
 
-    // It is a delay for a new frame, not to show the previous bigger ugly picture frame.
-    ret = fimc_poll(&m_events_c);
-    CHECK(ret);
-    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_RETURN_FOCUS, 0);
-    CHECK(ret);
+    ret = fimc_v4l2_g_ctrl(m_cam_fd, V4L2_CID_ESD_INT);
+    CHECK_PTR(ret);
 
     LOGV("%s: got the first frame of the preview\n", __func__);
 
@@ -906,13 +885,8 @@ int SecCamera::startRecord(void)
          __func__, m_recording_width, m_recording_height);
 
     if (m_camera_id == CAMERA_ID_BACK) {
-        // Some properties for back camera video recording
-        setISO(ISO_MOVIE);
-        setMetering(METERING_MATRIX);
-        setBatchReflection();
-
         ret = fimc_v4l2_s_fmt(m_cam_fd2, m_recording_width,
-                              m_recording_height, V4L2_PIX_FMT_NV12T, 0);
+                          m_recording_height, V4L2_PIX_FMT_NV12T, 0);
     }
     else {
         ret = fimc_v4l2_s_fmt(m_cam_fd2, m_recording_height,
@@ -943,12 +917,6 @@ int SecCamera::startRecord(void)
     ret = fimc_poll(&m_events_c2);
     CHECK(ret);
 
-    // Continuous autofocus for main camera
-    if (m_camera_id == CAMERA_ID_BACK) {
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_CAF_START_STOP, 1);
-        CHECK(ret);
-    }
-
     m_flag_record_start = 1;
 
     return 0;
@@ -970,12 +938,6 @@ int SecCamera::stopRecord(void)
         return -1;
     }
 
-    // Continuous autofocus for main camera
-    if (m_camera_id == CAMERA_ID_BACK) {
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_CAF_START_STOP, 0);
-        CHECK(ret);
-    }
-
     m_flag_record_start = 0;
 
     ret = fimc_v4l2_streamoff(m_cam_fd2);
@@ -984,13 +946,6 @@ int SecCamera::stopRecord(void)
     ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_FRAME_RATE,
                             FRAME_RATE_AUTO);
     CHECK(ret);
-
-    // Properties for back camera non-video recording
-    if (m_camera_id == CAMERA_ID_BACK) {
-        setISO(ISO_AUTO);
-        setMetering(METERING_CENTER);
-        setBatchReflection();
-    }
 
     return 0;
 }
@@ -1208,7 +1163,20 @@ int SecCamera::setSnapshotCmd(void)
     CHECK(ret);
 
     // Additional calls needed for CE147
-    // TODO: GPS
+
+    // GPS
+    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_LATITUDE, &gpsInfoLatitude);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_LONGITUDE, &gpsInfoLongitude);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_ALTITUDE, &gpsInfoAltitude);
+    CHECK(ret);
+    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_PROCESSINGMETHOD,
+        mExifInfo.gps_processing_method);
+    CHECK(ret);
+    unsigned long temp = m_gps_timestamp;
+    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_TIMESTAMP, &temp);
+    CHECK(ret);
 
     // Time
     time_t rawtime;
@@ -1687,29 +1655,12 @@ int SecCamera::setAutofocus(void)
 
 int SecCamera::getAutoFocusResult(void)
 {
-    int af_result, count, ret;
+    int af_result;
 
-    for (count = 0; count < FIRST_AF_SEARCH_COUNT; count++) {
-        ret = fimc_v4l2_g_ctrl(m_cam_fd, V4L2_CID_CAMERA_AUTO_FOCUS_RESULT_FIRST);
-        if (ret != AF_PROGRESS)
-            break;
-        usleep(AF_DELAY);
-    }
+    af_result = fimc_v4l2_g_ctrl(m_cam_fd, V4L2_CID_CAMERA_AUTO_FOCUS_RESULT);
 
-    if ((count >= FIRST_AF_SEARCH_COUNT) || (ret != AF_SUCCESS)) {
-        LOGV("%s : 1st AF timed out, failed, or was canceled", __func__);
-        af_result = 0;
-        goto finish_auto_focus;
-    }
+    LOGV("%s : returning %d", __func__, af_result);
 
-    af_result = 1;
-    LOGV("%s : AF was successful, returning %d", __func__, af_result);
-
-finish_auto_focus:
-    if (fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_FINISH_AUTO_FOCUS, 0) < 0) {
-        LOGE("ERR(%s):Fail on V4L2_CID_CAMERA_FINISH_AUTO_FOCUS", __func__);
-        return -1;
-    }
     return af_result;
 }
 
@@ -1721,12 +1672,12 @@ int SecCamera::cancelAutofocus(void)
         LOGE("ERR(%s):Camera was closed\n", __func__);
         return -1;
     }
-
+/*
     if (fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SET_AUTO_FOCUS, AUTO_FOCUS_OFF) < 0) {
         LOGE("ERR(%s):Fail on V4L2_CID_CAMERA_SET_AUTO_FOCUS", __func__);
         return -1;
     }
-
+*/
     return 0;
 }
 
@@ -2520,6 +2471,23 @@ int SecCamera::setGPSLatitude(const char *gps_latitude)
         m_gps_latitude = lround(strtod(gps_latitude, NULL) * 10000000);
     }
 
+    if (m_camera_id == CAMERA_ID_BACK) {
+        if (m_gps_enabled) {
+            long tmp = (m_gps_latitude >= 0) ? m_gps_latitude : -m_gps_latitude;
+            gpsInfoLatitude.north_south = m_gps_latitude < 0;
+            gpsInfoLatitude.dgree = tmp / 10000000;
+            tmp = (tmp % 10000000) * 60;
+            gpsInfoLatitude.minute = tmp / 10000000;
+            gpsInfoLatitude.second = (tmp % 10000000) * 60 / 10000000;
+        }
+        else {
+            gpsInfoLatitude.north_south = 0;
+            gpsInfoLatitude.dgree = 0;
+            gpsInfoLatitude.minute = 0;
+            gpsInfoLatitude.second = 0;
+        }
+    }
+
     LOGV("%s(m_gps_latitude(%ld))", __func__, m_gps_latitude);
     return 0;
 }
@@ -2534,6 +2502,23 @@ int SecCamera::setGPSLongitude(const char *gps_longitude)
         m_gps_longitude = lround(strtod(gps_longitude, NULL) * 10000000);
     }
 
+    if (m_camera_id == CAMERA_ID_BACK) {
+        if (m_gps_enabled) {
+            long tmp = (m_gps_longitude >= 0) ? m_gps_longitude : -m_gps_longitude;
+            gpsInfoLongitude.east_west = m_gps_longitude < 0;
+            gpsInfoLongitude.dgree = tmp / 10000000;
+            tmp = (tmp % 10000000) * 60;
+            gpsInfoLongitude.minute = tmp / 10000000;
+            gpsInfoLongitude.second = (tmp % 10000000) * 60 / 10000000;
+        }
+        else {
+            gpsInfoLongitude.east_west = 0;
+            gpsInfoLongitude.dgree = 0;
+            gpsInfoLongitude.minute = 0;
+            gpsInfoLongitude.second = 0;
+        }
+    }
+
     LOGV("%s(m_gps_longitude(%ld))", __func__, m_gps_longitude);
     return 0;
 }
@@ -2545,6 +2530,14 @@ int SecCamera::setGPSAltitude(const char *gps_altitude)
         m_gps_altitude = 0;
     else {
         m_gps_altitude = lround(strtod(gps_altitude, NULL) * 100);
+    }
+
+    if (m_camera_id == CAMERA_ID_BACK) {
+        gpsInfoAltitude.plus_minus = (m_gps_altitude >= 0);
+        long tmp = gpsInfoAltitude.plus_minus ? m_gps_altitude : -m_gps_altitude;
+        gpsInfoAltitude.dgree = tmp / 100;
+        gpsInfoAltitude.minute = tmp % 100;
+        gpsInfoAltitude.second = 0;
     }
 
     LOGV("%s(m_gps_altitude(%ld))", __func__, m_gps_altitude);
@@ -2592,6 +2585,9 @@ int SecCamera::setFaceDetectLockUnlock(int facedetect_lockunlock)
 int SecCamera::setObjectPosition(int x, int y)
 {
     LOGV("%s(setObjectPosition(x=%d, y=%d))", __func__, x, y);
+
+    if (m_preview_width ==640)
+        x = x - 80;
 
     if (fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_OBJECT_POSITION_X, x) < 0) {
         LOGE("ERR(%s):Fail on V4L2_CID_CAMERA_OBJECT_POSITION_X", __func__);
@@ -2681,7 +2677,6 @@ int SecCamera::setExifOrientationInfo(int orientationInfo)
 }
 
 //======================================================================
-// Must call after parameter update on CE147 (so the changes are reflected in batch)
 int SecCamera::setBatchReflection()
 {
     if (m_flag_camera_start) {
