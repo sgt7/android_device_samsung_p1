@@ -762,10 +762,6 @@ int SecCamera::startPreview(void)
         ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_VT_MODE, m_vtmode);
         CHECK(ret);
 
-        m_anti_banding = ANTI_BANDING_50HZ;
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_ANTI_BANDING, m_anti_banding);
-        CHECK(ret);
-
         ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_CHECK_FLIP, 0);
         CHECK(ret);
 
@@ -1672,12 +1668,12 @@ int SecCamera::cancelAutofocus(void)
         LOGE("ERR(%s):Camera was closed\n", __func__);
         return -1;
     }
-/*
+
     if (fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SET_AUTO_FOCUS, AUTO_FOCUS_OFF) < 0) {
         LOGE("ERR(%s):Fail on V4L2_CID_CAMERA_SET_AUTO_FOCUS", __func__);
         return -1;
     }
-*/
+
     return 0;
 }
 
