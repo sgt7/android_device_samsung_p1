@@ -37,7 +37,7 @@ else
     DATA_PART='/dev/block/mmcblk0p2'
 fi
 
-# check if we're running on a bml, mtd (cm7) or mtd (current) device
+# check if we're running on a bml, or mtd (current) device
 if /tmp/busybox test -e /dev/block/bml7 ; then
     # we're running on a bml device
 
@@ -76,36 +76,6 @@ if /tmp/busybox test -e /dev/block/bml7 ; then
     if [ "$?" != "0" ] ; then
         exit 3
     fi
-    /tmp/busybox sync
-
-    /sbin/reboot now
-    exit 0
-
-elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != 262144000 ; then
-    # we're running on a mtd (cm7) device
-
-    # make sure sdcard is mounted
-    check_mount /sdcard $SD_PART vfat
-
-    # everything is logged into /sdcard/cyanogenmod_mtd_old.log
-    set_log /sdcard/cyanogenmod_mtd_old.log
-
-    # write the package path to sdcard cyanogenmod.cfg
-    if /tmp/busybox test -n "$UPDATE_PACKAGE" ; then
-        /tmp/busybox echo "$UPDATE_PACKAGE" > /sdcard/cyanogenmod.cfg
-    fi
-
-    # inform the script that this is a CM7 upgrade
-    /tmp/busybox echo 1 > /sdcard/cyanogenmod.cm7upd
-
-    # write new kernel to boot partition
-    /tmp/bml_over_mtd.sh boot 72 reservoir 2004 /tmp/boot.img
-
-	# Remove /system/build.prop to trigger emergency boot
-	/tmp/busybox mount /system
-	/tmp/busybox rm -f /system/build.prop
-	/tmp/busybox umount -l /system
-
     /tmp/busybox sync
 
     /sbin/reboot now
