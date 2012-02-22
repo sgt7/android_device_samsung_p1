@@ -1,4 +1,4 @@
-import init.aries.usb.rc
+import init.s5pc110.usb.rc
 
 on init
     loglevel 9
@@ -21,8 +21,8 @@ on init
 on boot
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
-    setprop ro.build.product p1
-    setprop ro.product.device p1
+    setprop ro.build.product GT-P1000
+    setprop ro.product.device GT-P1000
     setprop ro.radio.noril yes
 
     setprop ro.crypto.keyfile.userdata /efs/userdata_footer

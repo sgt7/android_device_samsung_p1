@@ -18,15 +18,15 @@ DEVICE_PACKAGE_OVERLAYS := \
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
 	device/samsung/galaxytab/prebuilt/etc/asound.conf:system/etc/asound.conf \
-	device/samsung/galaxytab/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg
-#	device/samsung/galaxytab/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
+	device/samsung/galaxytab/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg \
+	device/samsung/galaxytab/prebuilt/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf
 
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/galaxytab/init.rc:root/init.rc \
 	device/samsung/galaxytab/init.p1.rc:root/init.s5pc110.rc \
 	device/samsung/galaxytab/init.p1.usb.rc:root/init.s5pc110.usb.rc \
-	device/samsung/galaxytab/ueventd.p1.rc:root/ueventd.p1.rc \
+	device/samsung/galaxytab/ueventd.p1.rc:root/ueventd.s5pc110.rc \
 	device/samsung/galaxytab/lpm.rc:root/lpm.rc \
 	device/samsung/galaxytab/setupdatadata.sh:root/sbin/setupdatadata.sh
 
@@ -65,7 +65,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	bdaddr_read
 
-# tDevice-specific packages
+# tvout
 PRODUCT_PACKAGES += \
 	SamsungServiceMode \
 	P1Parts \
@@ -110,11 +110,24 @@ PRODUCT_COPY_FILES += \
 	frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
 	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
 	frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
+	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+	frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
 	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
 # vold
 PRODUCT_COPY_FILES += \
         device/samsung/galaxytab/prebuilt/etc/vold.fstab:system/etc/vold.fstab
+
+# firmware
+PRODUCT_COPY_FILES += \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F00.bin:system/vendor/firmware/CE147F00.bin \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F01.bin:system/vendor/firmware/CE147F01.bin \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F02.bin:system/vendor/firmware/CE147F02.bin \
+	device/samsung/galaxytab/prebuilt/firmware/CE147F03.bin:system/vendor/firmware/CE147F03.bin
+
+# Credits
+PRODUCT_COPY_FILES += \
+	device/samsung/galaxytab/Credits-CM.html:system/etc/Credits-CM.html
 
 # Tablet!
 PRODUCT_CHARACTERISTICS := tablet
@@ -152,8 +165,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
     dalvik.vm.checkjni=false
 
-# Override /proc/sys/vm/dirty_ratio on UMS
+# Use dalvik-cache in /data (/cache is too small for system apps)
 PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dexopt-data-only=1 \
     ro.vold.umsdirtyratio=20
 
 # we have enough storage space to hold precise GC data
@@ -174,6 +188,14 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += $(foreach module,\
     $(filter-out $(RAMDISK_MODULES),$(wildcard device/samsung/galaxytab/modules/*.ko)),\
     $(module):system/lib/modules/$(notdir $(module)))
+
+# rfs converter
+PRODUCT_COPY_FILES += \
+    device/samsung/galaxytab/prebuilt/sbin/fat.format:root/sbin/fat.format
+
+# wifi
+PRODUCT_COPY_FILES += \
+    device/samsung/galaxytab/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
     LOCAL_KERNEL := device/samsung/galaxytab/kernel

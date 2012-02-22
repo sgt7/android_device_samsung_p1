@@ -60,7 +60,18 @@
          should be empty.  An example would be "softap.*" -->
     <string-array translatable="false" name="config_tether_wifi_regexs">
         <item>"wl0.1"</item>
+        <item>"softap.*"</item>
     </string-array>
+
+    <!-- Array of ConnectivityManager.TYPE_xxxx values allowable for tethering -->
+    <!-- Common options are [1, 4] for TYPE_WIFI and TYPE_MOBILE_DUN or
+    <!== [0,1,5,7] for TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI and TYPE_BLUETOOTH -->
+    <integer-array translatable="false" name="config_tether_upstream_types">
+        <item>0</item>
+        <item>1</item>
+        <item>4</item>
+        <item>5</item>
+    </integer-array>
 
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
@@ -86,11 +97,13 @@
 
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>7</item>
-        <item>94</item>
-        <item>208</item>
-        <item>458</item>
-        <item>2223</item>
+        <item>6</item>
+        <item>23</item>
+        <item>76</item>
+        <item>221</item>
+        <item>801</item>
+        <item>2801</item>
+        <item>4801</item>
     </integer-array>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
@@ -98,12 +111,14 @@
          than the size of the config_autoBrightnessLevels array.
     -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>10</item>
-        <item>35</item>
-        <item>55</item>
-        <item>70</item>
-        <item>70</item>
-        <item>250</item>
+        <item>75</item>
+        <item>90</item>
+        <item>105</item>
+        <item>120</item>
+        <item>150</item>
+        <item>180</item>
+        <item>210</item>
+        <item>240</item>
     </integer-array>
 
     <!-- Array of output values for button backlight corresponding to the LUX values
@@ -111,6 +126,8 @@
          than the size of the config_autoBrightnessLevels array.
     -->
     <integer-array name="config_autoBrightnessButtonBacklightValues">
+        <item>255</item>
+        <item>255</item>
         <item>255</item>
         <item>255</item>
         <item>255</item>
@@ -125,6 +142,8 @@
          Crespo has no keyboard so all values are zero.
     -->
     <integer-array name="config_autoBrightnessKeyboardBacklightValues">
+        <item>0</item>
+        <item>0</item>
         <item>0</item>
         <item>0</item>
         <item>0</item>
@@ -152,7 +171,7 @@
     <string name="config_geocodeProvider">com.google.android.location.GeocodeProvider</string>
 
     <!-- The default iface on which to monitor data use -->
-    <string name="config_datause_iface">ppp0</string>
+    <string name="config_datause_iface">pdp0</string>
 
     <!-- CRT Screen off animation -->
     <bool name="config_animateScreenLights">true</bool>
@@ -171,7 +190,7 @@
          This needs to match the constants in
          policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
     -->
-    <integer name="config_longPressOnHomeBehavior">1</integer>
+    <integer name="config_longPressOnHomeBehavior">2</integer>
 
     <!-- Max space (in MB) allocated to DownloadManager to store the downloaded
          files if they are to be stored in DownloadManager's data dir,
@@ -181,4 +200,5 @@
     <!-- Max number of downloads allowed to proceed concurrently -->
     <integer name="config_MaxConcurrentDownloadsAllowed">10</integer>
 
+    <bool name="config_forceDisableHardwareKeyboard">true</bool>
 </resources>

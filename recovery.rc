@@ -1,4 +1,4 @@
-import usb.rc # Renamed init.p1.usb.rc, we can't use init*.rc because the build script will delete it
+import init.s5pc110.usb.rc
 
 on early-init
     start ueventd
