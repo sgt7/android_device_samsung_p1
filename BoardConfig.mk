@@ -49,7 +49,7 @@ TARGET_RECOVERY_INITRC := device/samsung/galaxytab/recovery.rc
 
 TARGET_BOARD_PLATFORM := s5pc110
 TARGET_BOARD_PLATFORM_GPU := POWERVR_SGX540_120
-TARGET_BOOTLOADER_BOARD_NAME := p1
+TARGET_BOOTLOADER_BOARD_NAME := s5pc110
 
 # Releasetools
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/samsung/galaxytab/releasetools/galaxytab_ota_from_target_files
