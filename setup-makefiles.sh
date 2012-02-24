@@ -35,7 +35,7 @@ mkdir -p ../../../vendor/$MANUFACTURER/$DEVICE
 # limitations under the License.
 
 # Live wallpaper packages and Themes and some CM Packages
-PRODUCT_PACKAGES += \\
+PRODUCT_PACKAGES := \\
     VideoEditor \\
     VoiceDialer \\
     Basic \\
@@ -45,8 +45,10 @@ PRODUCT_PACKAGES += \\
     Galaxy4 \\
     LiveWallpapers \\
     LiveWallpapersPicker \\
+    MagicSmokeWallpapers \\
     VisualizationWallpapers \\
-    PhaseBeam
+    PhaseBeam \\
+    librs_jni
 
 # Publish that we support the live wallpaper feature.
 PRODUCT_COPY_FILES := \\

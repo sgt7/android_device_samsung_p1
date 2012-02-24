@@ -2,6 +2,7 @@
 **
 ** Copyright 2008, The Android Open Source Project
 ** Copyright 2010, Samsung Electronics Co. LTD
+** Copyright 2011, The CyanogenMod Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -43,7 +44,8 @@
 
 namespace android {
 
-//#define ENABLE_ESD_PREVIEW_CHECK
+// Not supported by CE147
+// #define ENABLE_ESD_PREVIEW_CHECK
 
 #if defined(LOG_NDEBUG) && LOG_NDEBUG == 0
 #define LOG_CAMERA LOGD
@@ -206,6 +208,8 @@ public:
     enum CAMERA_ID {
         CAMERA_ID_BACK  = 0,
         CAMERA_ID_FRONT = 1,
+		CAMERA_ID_MOBILETV = 3, 
+		CAMERA_ID_MAX = 4,	
     };
 
     enum JPEG_QUALITY {

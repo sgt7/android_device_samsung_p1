@@ -189,10 +189,6 @@ PRODUCT_COPY_FILES += $(foreach module,\
     $(filter-out $(RAMDISK_MODULES),$(wildcard device/samsung/galaxytab/modules/*.ko)),\
     $(module):system/lib/modules/$(notdir $(module)))
 
-# rfs converter
-PRODUCT_COPY_FILES += \
-    device/samsung/galaxytab/prebuilt/sbin/fat.format:root/sbin/fat.format
-
 # wifi
 PRODUCT_COPY_FILES += \
     device/samsung/galaxytab/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf
