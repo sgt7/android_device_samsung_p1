@@ -501,7 +501,7 @@ enum v4l2_camera_id {
 	CAMERA_ID_BACK  = 0,
 	CAMERA_ID_FRONT = 1,
 	CAMERA_ID_MOBILETV = 3, 
-	CAMERA_ID_MAX = 4,	
+	CAMERA_ID_MAX = 2,	
 };
 
 /* Pixel format FOURCC depth Description */
