@@ -518,7 +518,7 @@ on boot
 
 
 # Permissions for bluetooth.
-    setprop ro.bt.bdaddr_path "/efs/imei/bt.txt"
+    setprop ro.bt.bdaddr_path "/data/bdaddr"
     chown bluetooth bluetooth ro.bt.bdaddr_path
     chown bluetooth bluetooth /dev/s3c2410_serial0
     chmod 0600 /dev/s3c2410_serial0
@@ -729,7 +729,7 @@ service bootanim /system/bin/bootanimation
     disabled
     oneshot
 
-service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/etc/wpa_supplicant.conf
+service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/wpa_supplicant.conf
     class main
     socket wpa_eth0 dgram 0660 wifi wifi
     disabled
