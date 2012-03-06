@@ -771,6 +771,11 @@ service dbus /system/bin/dbus-daemon --system --nofork
     group bluetooth net_bt_admin
 
 # bluetooth_bnep
+service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
 service iprenew_bnep0 /system/bin/dhcpcd -n
     class main
     disabled

@@ -145,7 +145,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.ril.enable.managed.roaming=1 \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
        ro.ril.emc.mode=2 \
-       ro.sf.hwrotation=90 
+       ro.sf.hwrotation=90
 
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
@@ -170,6 +170,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Use dalvik-cache in /data (/cache is too small for system apps)
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dexopt-data-only=1
+
+# Use Google dns servers if the interface does not define them
+PRODUCT_PROPERTY_OVERRIDES += \
+    net.dns1=8.8.8.8 \
+    net.dns2=8.8.4.4
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
