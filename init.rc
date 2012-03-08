@@ -262,7 +262,7 @@ on post-fs
     mkdir /data/misc/bluetoothd 0770 bluetooth bluetooth
     mkdir /data/misc/bluetooth 0770 system system
     mkdir /data/misc/keystore 0700 keystore keystore
-    mkdir /data/misc/vpn 0777 system system
+    mkdir /data/misc/vpn 0770 system vpn
     mkdir /data/misc/systemkeys 0700 system system
     mkdir /data/misc/vpn/profiles 0770 system system
     mkdir /data/misc/radio 0771 radio radio
