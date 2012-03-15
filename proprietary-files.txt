@@ -1,0 +1,65 @@
+## radio
+lib/libril.so
+lib/libsecril-client.so
+lib/libsec-ril.so
+bin/rild
+bin/pppd_runner
+
+## gps
+lib/hw/gps.s5pc110.so
+vendor/bin/gpsd
+etc/gps.conf
+
+## sensors
+lib/libakm.so
+lib/hw/sensors.s5pc110.so
+
+## wifi
+vendor/firmware/nvram_net.txt
+
+## gfx
+bin/pvrsrvinit
+lib/egl/libGLES_android.so
+vendor/lib/egl/libEGL_POWERVR_SGX540_120.so
+vendor/lib/egl/libGLESv1_CM_POWERVR_SGX540_120.so
+vendor/lib/egl/libGLESv2_POWERVR_SGX540_120.so
+vendor/lib/hw/gralloc.s5pc110.so
+vendor/lib/libglslcompiler.so
+vendor/lib/libIMGegl.so
+vendor/lib/libpvr2d.so
+vendor/lib/libpvrANDROID_WSEGL.so
+vendor/lib/libPVRScopeServices.so
+vendor/lib/libsrv_init.so
+vendor/lib/libsrv_um.so
+vendor/lib/libusc.so
+
+## low power mode
+bin/charging_mode
+bin/playlpm
+lib/libQmageDecoder.so
+media/battery_charging_10.qmg
+media/battery_charging_100.qmg
+media/battery_charging_15.qmg
+media/battery_charging_20.qmg
+media/battery_charging_25.qmg
+media/battery_charging_30.qmg
+media/battery_charging_35.qmg
+media/battery_charging_40.qmg
+media/battery_charging_45.qmg
+media/battery_charging_5.qmg
+media/battery_charging_50.qmg
+media/battery_charging_55.qmg
+media/battery_charging_60.qmg
+media/battery_charging_65.qmg
+media/battery_charging_70.qmg
+media/battery_charging_75.qmg
+media/battery_charging_80.qmg
+media/battery_charging_85.qmg
+media/battery_charging_90.qmg
+media/battery_charging_95.qmg
+media/chargingwarning_disconnected.qmg
+media/chargingwarning_temp.qmg
+media/usb_not_charging.qmg
+
+## bluetooth
+bin/BCM4329B1_002.002.023.0534.0571.hcd
