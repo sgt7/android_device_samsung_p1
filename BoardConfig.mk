@@ -24,7 +24,7 @@ TARGET_PREBUILT_KERNEL := device/samsung/p1/kernel
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/samsung/p1/releasetools/p1_ota_from_target_files
 TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/samsung/p1/releasetools/p1_img_from_target_files
 
-TARGET_OTA_ASSERT_DEVICE := galaxytab, GT-P1000, GT-P1000L, GT-P1000N, GT-P1000R
+TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000,GT-P1000L,GT-P1000N
 
 # Import the p1-common BoardConfigCommon.mk
 include device/samsung/p1-common/BoardConfigCommon.mk
