@@ -262,7 +262,9 @@ on post-fs
     mkdir /data/misc/bluetoothd 0770 bluetooth bluetooth
     mkdir /data/misc/bluetooth 0770 system system
     mkdir /data/misc/keystore 0700 keystore keystore
+    mkdir /data/misc/keychain 0771 system system
     mkdir /data/misc/vpn 0770 system vpn
+    chown system vpn /data/misc/vpn
     mkdir /data/misc/systemkeys 0700 system system
     mkdir /data/misc/vpn/profiles 0770 system system
     mkdir /data/misc/radio 0771 radio radio
@@ -519,7 +521,7 @@ on boot
 
 # Permissions for bluetooth.
     setprop ro.bt.bdaddr_path "/data/bdaddr"
-    chown bluetooth bluetooth ro.bt.bdaddr_path
+    chown bluetooth bluetooth /data/bdaddr
     chown bluetooth bluetooth /dev/s3c2410_serial0
     chmod 0600 /dev/s3c2410_serial0
     chmod 0660 /sys/class/rfkill/rfkill0/state
@@ -750,11 +752,6 @@ service ifcfg_eth0 /system/bin/ifconfig eth0 up
     disabled
     oneshot
 
-#service wlandutservice /system/bin/wlandutservice
-#	class main
-#    disabled
-#    oneshot
-
 service hciattach /system/bin/brcm_patchram_plus --enable_hci \
     --baudrate 3000000 --use_baudrate_for_download \
     --scopcm=0,0,0,0,0,0,0,0,0,0 \
@@ -847,17 +844,11 @@ service drm /system/bin/logwrapper /system/bin/drmserver
     user drm root system
     group root system inet drmrpc
 
-# bugreport is triggered by holding down volume down, volume up and power
-service bugreport /system/bin/dumpstate -d -v -o /sdcard/bugreports/bugreport
+service dumpstate /system/bin/dumpstate -s
     class main
     socket dumpstate stream 0660 shell log
     disabled
     oneshot
-
-#service 3g_route /system/xbin/route add default dev pdp0
-#    class main
-#    user root system
-#    group root system
 
 service orientationd /system/vendor/bin/orientationd
     class main
