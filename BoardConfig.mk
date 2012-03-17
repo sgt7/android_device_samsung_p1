@@ -66,14 +66,12 @@ BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 CONFIG_DRIVER_WEXT := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
-BOARD_WLAN_DEVICE       := bcm4329
-WIFI_DRIVER_MODULE_NAME := "bcm4329"
+BOARD_WLAN_DEVICE := bcm4329
 WIFI_DRIVER_MODULE_PATH := "/lib/modules/bcm4329.ko"
-WIFI_DRIVER_MODULE_ARG  := "firmware_path=/system/etc/wifi/bcm4329_sta.bin nvram_path=/system/etc/wifi/nvram_net.txt dhd_watchdog_ms=10 dhd_poll=1"
-WIFI_DRIVER_FW_PATH_AP  := "/system/etc/wifi/bcm4329_aps.bin"
-WIFI_DRIVER_FW_PATH_STA := "/system/etc/wifi/bcm4329_sta.bin"
-BOARD_WEXT_NO_COMBO_SCAN := true
-BOARD_NETWORK_INTERFACES_DIR := "/sys/devices/virtual/net"
+WIFI_DRIVER_FW_PATH_STA := "/vendor/firmware/fw_bcm4329.bin"
+WIFI_DRIVER_FW_PATH_AP := "/vendor/firmware/fw_bcm4329_apsta.bin"
+WIFI_DRIVER_MODULE_NAME := "bcm4329"
+WIFI_DRIVER_MODULE_ARG := "firmware_path=/vendor/firmware/fw_bcm4329.bin nvram_path=/vendor/firmware/nvram_net.txt"
 
 # 3G
 BOARD_MOBILEDATA_INTERFACE_NAME := "pdp0"
@@ -124,7 +122,7 @@ BOARD_CUSTOM_BOOTIMG_MK := device/samsung/galaxytab/shbootimg.mk
 TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /cache/.startrecovery; sync; echo "
 BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/galaxytab/recovery/graphics.c
 
-TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000
+TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000,GT-P1000L,GT-P1000N
 
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun%d/file
 
