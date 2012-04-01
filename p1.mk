@@ -35,7 +35,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.delay=3000 \
        ro.telephony.call_ring.absent=true \
        mobiledata.interfaces=pdp0,eth0,gprs,ppp0 \
-       ro.telephony.ril.v3=datacall,icccardstatus \
+       ro.telephony.ril.v3=icccardstatus,datacall,signalstrength,facilitylock \
        ro.telephony.ril_class=SamsungRIL \
        ro.ril.enable.managed.roaming=1 \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
@@ -44,8 +44,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Kernel modules
 PRODUCT_COPY_FILES += $(foreach module,\
-	$(wildcard device/samsung/p1/*.ko),\
-	$(module):system/lib/modules/$(notdir $(module)))
+    $(filter-out $(RAMDISK_MODULES),$(wildcard device/samsung/p1/modules/*.ko)),\
+    $(module):system/lib/modules/$(notdir $(module)))
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
     LOCAL_KERNEL := device/samsung/p1/kernel
