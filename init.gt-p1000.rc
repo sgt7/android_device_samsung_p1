@@ -9,14 +9,9 @@ on init
     mkdir /mnt/sdcard 0000 system system
     symlink /mnt/sdcard /sdcard
 
-    # FIXME: Market checks this variable for space-checking, but downloads to /datadata
-    export DOWNLOAD_CACHE /data/download
-
     export SECONDARY_STORAGE /mnt/emmc
     mkdir /mnt/emmc 0000 system system
     symlink /mnt/emmc /emmc
-
-    mkdir /datadata 0771 system system
 
     # We will create our own ril-daemon service in class 'core' because the
     # rild doesn't like being killed. (During device encryption.)
@@ -28,8 +23,6 @@ on boot
     setprop ro.build.product p1
     setprop ro.product.device p1
     setprop ro.radio.noril yes
-
-    setprop ro.crypto.keyfile.userdata /efs/userdata_footer
 
 # fake some battery state
     setprop status.battery.state Slow
@@ -50,8 +43,6 @@ on fs
     mkdir /radio 0775 radio radio
     mount yaffs2 mtd@radio /radio
     chown radio radio /radio/modem.bin
-
-    mount yaffs2 mtd@datadata /datadata
 
 # We chown/chmod /efs because mount is run as root + defaults
     mkdir /efs 0775 radio radio
@@ -86,14 +77,10 @@ on fs
     chmod 660 /sys/class/sec/uart_switch/UART_SEL/value
 
 on post-fs
-    # We chown/chmod /datadata again so because mount is run as root + defaults
-    chown system system /datadata
-    chmod 0771 /datadata
-
     #symlinks for samsung RIL
     symlink /radio/modem.bin /dev/block/bml12
 
-# allow system to modify cpufreq control files
+    # allow system to modify cpufreq control files
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
@@ -108,12 +95,6 @@ on post-fs
     write /sys/class/input/input4/enable 1
 
 on post-fs-data
-    # for migrating download provider's cache out of the small /data/data
-    mkdir /data/data2 0771 system system
-
-    # setup datadata
-    exec /sbin/setupdatadata.sh
-
     # create data/gps for GPS demon
     mkdir /data/gps 771 gps system
     chown gps system /data/gps
@@ -125,9 +106,6 @@ on post-fs-data
 
     # to enable wifi
     setprop wifi.interface "eth0"
-
-    # download cache
-    mkdir /data/download 0770 system cache
 
 on property:ro.debuggable=1
     start adbd
@@ -170,3 +148,13 @@ service gps-daemon /system/vendor/bin/gpsd
     class late_start
     user system
     group system inet
+
+service tvout /system/bin/tvoutserver
+    class late_start
+    user system
+    group graphics
+
+service tvouthack /system/bin/tvouthack
+    user system
+    group graphics
+    disabled
