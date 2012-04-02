@@ -101,10 +101,6 @@ def AddSystem(output_zip):
     os.symlink(os.path.join(OPTIONS.input_tmp, "SYSTEM"),
                os.path.join(OPTIONS.input_tmp, "system"))
   except OSError, e:
-      # bogus error on my mac version?
-      #   File "./build/tools/releasetools/img_from_target_files", line 86, in AddSystem
-      #     os.path.join(OPTIONS.input_tmp, "system"))
-      # OSError: [Errno 17] File exists
     if (e.errno == errno.EEXIST):
       pass
 

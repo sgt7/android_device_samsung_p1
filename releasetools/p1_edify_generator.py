@@ -28,6 +28,7 @@ class EdifyGenerator(edify_generator.EdifyGenerator):
       self.script.append(
             ('package_extract_file("modem.bin", "/tmp/modem.bin");\n'
              'set_perm(0, 0, 0777, "/tmp/modem.bin");'))
+      self.script.append('ui_print("Checking state of BML/MTD...");')
       self.script.append(
             ('package_extract_file("updater.sh", "/tmp/updater.sh");\n'
              'set_perm(0, 0, 0777, "/tmp/updater.sh");'))
@@ -52,6 +53,8 @@ class EdifyGenerator(edify_generator.EdifyGenerator):
 
       self.script.append('package_extract_file("boot.img", "/tmp/boot.img");')
       self.script.append('assert(run_program("/tmp/updater.sh") == 0);')
+      self.script.append('ui_print("Formatting of MTD complete...");')
+      self.script.append('ui_print("Installing system...");')
 
     def RunBackup(self, command):
       edify_generator.EdifyGenerator.RunBackup(self, command)
