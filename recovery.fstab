@@ -7,7 +7,7 @@
 /cache      yaffs2  cache
 /data       ext4    /dev/block/mmcblk0p2	length=-16384
 /system     yaffs2  system
-/datadata   yaffs2  datadata
+#/datadata   yaffs2  datadata
 
 /sdcard     vfat    /dev/block/mmcblk0p1
 

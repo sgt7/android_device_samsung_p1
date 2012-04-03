@@ -54,9 +54,6 @@ on fs
 # ko files for vibrator
     insmod /system/lib/modules/vibrator.ko
 
-# samsung module
-    insmod /system/lib/modules/storage.ko
-
 # ko files for bthid
     insmod /system/lib/modules/bthid.ko
 
