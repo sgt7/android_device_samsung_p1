@@ -57,6 +57,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
 	frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
+# Device-specific packages
+PRODUCT_PACKAGES := \
+	SamsungServiceMode
+
 # Build.prop overrides
 PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.delay=3000 \
