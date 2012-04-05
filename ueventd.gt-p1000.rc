@@ -13,6 +13,11 @@
 # for ddc
 /dev/i2c-1                0660   system     graphics
 
+# more i2c stuff
+/dev/i2c-5                0660   root       input
+/dev/i2c-6                0660   root       input
+/dev/i2c-10               0660   root       input
+
 # for copybit
 /dev/pmem_gpu1            0660   system     graphics
 
