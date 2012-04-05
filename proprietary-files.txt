@@ -3,7 +3,6 @@ lib/libril.so
 lib/libsecril-client.so
 lib/libsec-ril.so
 bin/rild
-bin/pppd_runner
 
 ## gps
 lib/hw/gps.s5pc110.so
@@ -62,4 +61,15 @@ media/chargingwarning_temp.qmg
 media/usb_not_charging.qmg
 
 ## bluetooth
-bin/BCM4329B1_002.002.023.0534.0571.hcd
+bin/BCM4329B1_002.002.023.0534.0590.hcd
+
+## tvout
+lib/libddc.so
+lib/libedid.so
+lib/lib_tvoutengine.so
+lib/libtvoutfimc.so
+lib/libtvouthdmi.so
+lib/libtvout_jni.so
+lib/libtvoutservice.so
+lib/libtvout.so
+bin/tvoutserver
