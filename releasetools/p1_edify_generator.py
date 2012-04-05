@@ -17,7 +17,6 @@ import os, sys
 
 LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools/releasetools'))
-VENDOR_SAMSUNG_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../vendor/samsung'))
 
 import edify_generator
 
@@ -58,6 +57,9 @@ class EdifyGenerator(edify_generator.EdifyGenerator):
 
     def RunBackup(self, command):
       edify_generator.EdifyGenerator.RunBackup(self, command)
+
+    def RunConfig(self, command):
+      edify_generator.EdifyGenerator.RunConfig(self, command)
 
     def WriteBMLoverMTD(self, partition, partition_start_block, reservoirpartition, reservoir_start_block, image):
       """Write the given package file into the given partition."""

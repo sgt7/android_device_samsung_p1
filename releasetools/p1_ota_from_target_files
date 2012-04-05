@@ -73,6 +73,9 @@ def WriteFullOTAPackage(input_zip, output_zip):
   AppendAssertions(script, input_zip)
   device_specific.FullOTA_Assertions()
 
+  if OPTIONS.backuptool:
+    script.RunBackup("backup")
+
   if OPTIONS.wipe_user_data:
     script.FormatPartition("/data")
 
@@ -93,6 +96,13 @@ def WriteFullOTAPackage(input_zip, output_zip):
   Item.GetMetadata(input_zip)
   script.ShowProgress(0.15, 5)
   Item.Get("system").SetPermissions(script)
+
+  if OPTIONS.backuptool:
+    script.ShowProgress(0.2, 10)
+    script.RunBackup("restore")
+
+  if OPTIONS.modelidcfg:
+    script.RunConfig("")
 
   CopyBootFiles(input_zip, output_zip)
   CopyBMLoverMTD(output_zip)
