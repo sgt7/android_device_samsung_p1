@@ -59,16 +59,13 @@ PRODUCT_COPY_FILES += \
 
 # Build.prop overrides
 PRODUCT_PROPERTY_OVERRIDES += \
-       ro.telephony.call_ring.multiple=false \
        ro.telephony.call_ring.delay=3000 \
        ro.telephony.call_ring.absent=true \
-       mobiledata.interfaces=pdp0,eth0,gprs,ppp0 \
+       mobiledata.interfaces=pdp0,eth0,gprs \
        ro.telephony.ril.v3=icccardstatus,datacall,signalstrength,facilitylock \
-       ro.telephony.ril_class=SamsungRIL \
        ro.ril.enable.managed.roaming=1 \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
-       ro.ril.emc.mode=2 \
-       ro.sf.hwrotation=90
+       ro.ril.emc.mode=2
 
 # Kernel modules
 PRODUCT_COPY_FILES += $(foreach module,\
