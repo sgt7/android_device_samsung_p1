@@ -40,7 +40,7 @@
 # application settings that are stored in resourced.
 
 
-DEVICE_PACKAGE_OVERLAYS := device/samsung/p1c/overlay
+DEVICE_PACKAGE_OVERLAYS := device/samsung/p1/overlay
 
 # Init files
 PRODUCT_COPY_FILES += \
