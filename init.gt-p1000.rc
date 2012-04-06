@@ -72,7 +72,7 @@ on post-fs-data
     # sensors P1 only
     # this needs to be fixed correctly, see: frameworks/base/services/sensorservice/SensorDevice.cp
 
-    write /sys/class/input/input3/enable 1  # enable orientation sensor
+    write /sys/class/input/input5/enable 1  # enable lightsensor-level
 
 on boot
 
