@@ -45,7 +45,6 @@ DEVICE_PACKAGE_OVERLAYS := device/samsung/p1c/overlay
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/p1/init.gt-p1000.rc:root/init.gt-p1000.rc \
-	device/samsung/p1-common/usb.rc:root/init.gt-p1000.usb.rc \
 	device/samsung/p1/ueventd.gt-p1000.rc:root/ueventd.gt-p1000.rc 
 
 # vold
