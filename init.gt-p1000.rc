@@ -96,3 +96,8 @@ service ril-daemon /system/bin/rild -l /system/lib/libsec-ril.so -- -d /dev/ttyS
     user root
     group radio cache inet misc audio sdcard_rw log
 
+service gpsd /system/vendor/bin/gpsd -c /system/vendor/etc/gps.xml
+    class late-start
+    socket gps seqpacket 0660 gps system
+    user gps system
+    group system inet
