@@ -1,4 +1,8 @@
-# for LSI modules
+# -------------------------------------------------------------------------------
+# only add lines that are not already in system/core/rootdir/ueventd.rc
+# -------------------------------------------------------------------------------
+
+# graphics & camera
 /dev/pvrsrvkm             0666   system     system
 /dev/video0               0660   system     camera
 /dev/video1               0660   system     camera
@@ -8,7 +12,11 @@
 /dev/video22              0660   system     graphics
 /dev/s3c-jpg              0660   system     camera
 /dev/s3c-mem              0660   system     system
-/dev/s3c-mfc              0660   media      media
+/dev/s3c-mfc              0660   system     graphics
+
+# latin Mobile TV
+/dev/dmb                  0660   system     system
+/dev/s3c-tsi              0660   system     system
 
 # for ddc
 /dev/i2c-1                0660   system     graphics
@@ -26,16 +34,22 @@
 /dev/modem_fmt            0660   radio      radio
 /dev/modem_rfs            0660   radio      radio
 /dev/s3c2410_serial3      0660   radio      radio
-/dev/alarm 		  0664   radio      radio
+/dev/alarm                0664   radio      radio
 /dev/onedram              0660   radio      radio
+
+# this device is missing - needed on mtd?
 /dev/storage              0660   radio      radio
 
+# network
 /dev/dun                  0600   system     system
 /dev/ttyGS0               0600   system     system
 
 # for Sensor HAL
 /dev/akm8973              0660   system     system
 /dev/accelerometer        0660   system     system
+/dev/l3g4200d             0600   root       root
+/sys/devices/virtual/BMA-dev/accelerometer   calibration               0660 system radio
+/sys/devices/virtual/lightsensor/switch_cmd  lightsensor_file_cmd      0660 system radio
 
 # for GPS
 /dev/s3c2410_serial1      0600   gps        gps
@@ -44,4 +58,7 @@
 /dev/s3c2410_serial0      0660   bluetooth  bluetooth
 
 # for mtp
-/dev/usb_mtp_gadget       0660   root       mtp
+/dev/usb_mtp_gadget       0660   system     system
+
+# serial console aka s3c2310_serial2 uart in old kernel
+/dev/ttyFIQ0              0600   root       root

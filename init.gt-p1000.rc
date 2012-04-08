@@ -74,6 +74,10 @@ on post-fs-data
 
     write /sys/class/input/input5/enable 1  # enable lightsensor-level
 
+    # Allow net_raw to have access to /dev/socket directory
+    chown root net_raw /dev/socket
+    chmod 0775 /dev/socket
+
 on boot
 
     setprop ro.build.product p1
