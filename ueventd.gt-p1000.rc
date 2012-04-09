@@ -12,7 +12,7 @@
 /dev/video22              0660   system     graphics
 /dev/s3c-jpg              0660   system     camera
 /dev/s3c-mem              0660   system     system
-/dev/s3c-mfc              0660   system     graphics
+/dev/s3c-mfc              0660   media      media
 
 # latin Mobile TV
 /dev/dmb                  0660   system     system
