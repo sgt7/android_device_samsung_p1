@@ -19,20 +19,6 @@ on property:persist.service.usb.setting=4
 
 # ----------------------------------------------------------------------------------------------------
 
-# bluetooth mac - source for that can be found in device/samsung/aries-common/bdaddr_read/*
-# could that be a solution for the reported changing mac problem?
-
-service bdaddr /system/bin/bdaddr_read
-    class main
-    user root
-    disabled
-    oneshot
-
-on property:init.svc.bootanim=running
-    start bdaddr
-
-# ----------------------------------------------------------------------------------------------------
-
 # usb tethering
 service dnsmasq /system/bin/logwrapper /system/bin/dnsmasq -d
     class main
@@ -51,13 +37,6 @@ service geomagneticd /system/vendor/bin/geomagneticd
     user compass
     group system input
     disabled
-
-# ----------------------------------------------------------------------------------------------------
-
-# execute files in /system/etc/init.d
-service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
-    class main
-    oneshot
 
 # ----------------------------------------------------------------------------------------------------
 
