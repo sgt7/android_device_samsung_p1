@@ -60,10 +60,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES := \
 	SamsungServiceMode
 
-# script to set bluetooth and wlan MAC addresses
-PRODUCT_COPY_FILES += \
-        device/samsung/p1/prebuilt/bin/set-macaddr:system/vendor/bin/set-macaddr
-
 # Build.prop overrides
 PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.delay=3000 \

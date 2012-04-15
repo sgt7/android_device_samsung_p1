@@ -162,16 +162,6 @@ service gpsd /system/vendor/bin/gpsd -c /system/vendor/etc/gps.xml
     user gps system
     group system inet
 
-# set device specific MAC addresses, depends on preceding start of rild
-service set-macaddr /system/vendor/bin/set-macaddr
-    user root
-    group root
-    disabled
-    oneshot
-
-on property:init.svc.ril-daemon=running
-    start set-macaddr
-
 # --------------------------------------------------------------------------------------
 # GT-P1000L only
 # --------------------------------------------------------------------------------------
