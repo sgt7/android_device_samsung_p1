@@ -7,4 +7,9 @@
         "repository": "android_packages_apps_SamsungServiceMode",
         "target_path": "packages/apps/SamsungServiceMode"
     }
+    {
+        "repository": "android_kernel_samsung_p1",
+        "target_path": "kernel/samsung/p1",
+        "branch": "android-samsung-2.6.35"
+    }
 ]

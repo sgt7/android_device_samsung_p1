@@ -70,20 +70,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
        ro.ril.emc.mode=2
 
-# Kernel modules
-PRODUCT_COPY_FILES += $(foreach module,\
-    $(filter-out $(RAMDISK_MODULES),$(wildcard device/samsung/p1/modules/*.ko)),\
-    $(module):system/lib/modules/$(notdir $(module)))
-
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-    LOCAL_KERNEL := device/samsung/p1/kernel
-else
-    LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
-
 # Inherit P1 common device configuration.
 $(call inherit-product, device/samsung/p1-common/device_base.mk)
 
