@@ -7,6 +7,7 @@ bin/rild
 ## gps
 lib/hw/gps.s5pc110.so
 vendor/bin/gpsd
+vendor/etc/gps.xml
 etc/gps.conf
 
 ## sensors
