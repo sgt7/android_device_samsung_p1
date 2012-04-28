@@ -15,11 +15,13 @@
 LOCAL_PATH := $(call my-dir)
 
 ifeq ($(TARGET_DEVICE),p1)
-
-ifneq ($(TARGET_SIMULATOR),true)
-include $(call all-makefiles-under,$(LOCAL_PATH))
+  include $(call all-makefiles-under,$(LOCAL_PATH))
 endif
 
+ifeq ($(TARGET_DEVICE),p1l)
+  include $(call all-makefiles-under,$(LOCAL_PATH))
 endif
 
-
+ifeq ($(TARGET_DEVICE),p1n)
+  include $(call all-makefiles-under,$(LOCAL_PATH))
+endif

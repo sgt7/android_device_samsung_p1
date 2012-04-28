@@ -13,24 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# BoardConfig.mk
 #
-# Product-specific compile-time definitions.
+# board specific compile-time definitions.
 #
 
-# Use the non-open-source parts, if they're present
--include vendor/samsung/p1/BoardConfigVendor.mk
+# Import p1-common config
+include device/samsung/p1-common/BoardConfigCommon.mk
 
 # Releasetools
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/samsung/p1/releasetools/p1_ota_from_target_files
 TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/samsung/p1/releasetools/p1_img_from_target_files
-
-# Kernel
-TARGET_KERNEL_SOURCE := kernel/samsung/p1
-TARGET_KERNEL_CONFIG := cyanogenmod_p1_defconfig
-
-# Asserts
-TARGET_OTA_ASSERT_DEVICE := galaxytab,GT-P1000,GT-P1000L,GT-P1000N
-
-# Import the p1-common BoardConfigCommon.mk
-include device/samsung/p1-common/BoardConfigCommon.mk

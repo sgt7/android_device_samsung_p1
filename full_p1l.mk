@@ -23,9 +23,9 @@ $(call inherit-product, device/samsung/p1/p1.mk)
 # Discard inherited values and use our own instead.
 # --------------------------------------------------------------------------------
 
-PRODUCT_NAME := full_p1
-PRODUCT_DEVICE := p1
-PRODUCT_MODEL := GT-P1000
+PRODUCT_NAME := full_p1l
+PRODUCT_DEVICE := p1l
+PRODUCT_MODEL := GT-P1000L
 
 # kernel
 TARGET_KERNEL_SOURCE := kernel/samsung/p1

@@ -18,4 +18,6 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_p1.mk
+    $(LOCAL_DIR)/full_p1.mk \
+    $(LOCAL_DIR)/full_p1l.mk \
+    $(LOCAL_DIR)/full_p1n.mk
