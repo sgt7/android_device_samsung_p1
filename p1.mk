@@ -73,7 +73,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.ril.v3=icccardstatus,datacall,signalstrength,facilitylock \
        ro.ril.enable.managed.roaming=1 \
        ro.ril.oem.nosim.ecclist=911,112,999,000,08,118,120,122,110,119,995 \
-       ro.ril.emc.mode=2
+       ro.ril.emc.mode=2 \
+       rild.libpath=/system/lib/libsec-ril.so \
+       rild.libargs=-d /dev/ttys0 \
+       ro.sf.lcd_density=160 \
+       ro.phone_storage=1 \
+       ro.additionalmounts=/mnt/emmc \
+       ro.vold.switchablepair=/mnt/sdcard,/mnt/emmc \
+       persist.sys.vold.switchexternal=0
 
 # Galaxy Tab uses high-density artwork where available
 PRODUCT_LOCALES += hdpi
