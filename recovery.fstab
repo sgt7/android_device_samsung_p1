@@ -1,14 +1,14 @@
-# mount point	fstype		device				options (length for cryptfs encryption footer)
+# mount point	fstype		device			options (length for cryptfs encryption footer)
 
-/boot       mtd     boot
-/recovery   mtd     recovery
-/radio      mtd     radio
+/boot           mtd             boot
+/recovery       mtd             recovery
 
-/cache      yaffs2  cache
-/data       ext4    /dev/block/mmcblk0p2	length=-16384
-/system     yaffs2  system
-#/datadata   yaffs2  datadata
+/cache          yaffs2          cache
+/efs            yaffs2          efs
+/radio          yaffs2          radio
+/system         yaffs2          system
 
-/sdcard     vfat    /dev/block/mmcblk0p1
+/data           ext4            /dev/block/mmcblk0p2	length=-16384
 
-/emmc       vfat    /dev/block/mmcblk1p1
+/sdcard         vfat            /dev/block/mmcblk0p1
+/emmc           vfat            /dev/block/mmcblk1p1
