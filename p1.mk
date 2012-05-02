@@ -13,6 +13,16 @@
 # builds should be kept here for simplicity and transparency. 
 
 # --------------------------------------------------------------------------------
+# device specific configuration
+# --------------------------------------------------------------------------------
+
+# This is the hardware-specific overlay, which points to the location
+# of hardware-specific resource overrides, typically the frameworks and
+# application settings that are stored in resourced.
+
+DEVICE_PACKAGE_OVERLAYS := device/samsung/p1/overlay
+
+# --------------------------------------------------------------------------------
 # inherit device configuration common between GSM & CDMA products.
 # --------------------------------------------------------------------------------
 
@@ -36,16 +46,6 @@ $(call inherit-product-if-exists, vendor/samsung/p1/p1-vendor.mk)
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
-
-# --------------------------------------------------------------------------------
-# device specific configuration
-# --------------------------------------------------------------------------------
-
-# This is the hardware-specific overlay, which points to the location
-# of hardware-specific resource overrides, typically the frameworks and
-# application settings that are stored in resourced.
-
-DEVICE_PACKAGE_OVERLAYS := device/samsung/p1/overlay
 
 # Init files
 PRODUCT_COPY_FILES += \
