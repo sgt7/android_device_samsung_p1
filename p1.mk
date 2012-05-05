@@ -82,6 +82,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.vold.switchablepair=/mnt/sdcard,/mnt/emmc \
        persist.sys.vold.switchexternal=0
 
+# set recovery.fstab location (needed for p1l & p1n products)
+TARGET_RECOVERY_FSTAB := device/samsung/p1/recovery.fstab
+
 # Galaxy Tab uses high-density artwork where available
 PRODUCT_LOCALES += hdpi
 
