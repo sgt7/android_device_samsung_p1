@@ -22,6 +22,8 @@ LOCAL_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file_
 RELEASETOOLS_DIR = os.path.abspath(os.path.join(LOCAL_DIR, '../../../build/tools/releasetools'))
 TARGET_DIR = os.getenv('OUT')
 UTILITIES_DIR = os.path.join(TARGET_DIR, 'utilities')
+SYSTEMBIN_DIR = os.path.join(TARGET_DIR, 'system/bin')
+SYSTEMXBIN_DIR = os.path.join(TARGET_DIR, 'system/xbin')
 
 # Add releasetools directory to python path
 sys.path.append(RELEASETOOLS_DIR)
@@ -42,10 +44,10 @@ def CopyBootFiles(input_zip, output_zip):
 def CopyBMLoverMTD(output_zip):
   """Copy the bml_over_mtd utility and script to the output."""
   output_zip.write(os.path.join(TARGET_DIR, "modem.bin"),"modem.bin")
-  output_zip.write(os.path.join(UTILITIES_DIR, "make_ext4fs"),"make_ext4fs")
-  output_zip.write(os.path.join(UTILITIES_DIR, "busybox"),"busybox")
-  output_zip.write(os.path.join(UTILITIES_DIR, "flash_image"),"flash_image")
-  output_zip.write(os.path.join(UTILITIES_DIR, "erase_image"),"erase_image")
+  output_zip.write(os.path.join(SYSTEMBIN_DIR, "make_ext4fs"),"make_ext4fs")
+  output_zip.write(os.path.join(SYSTEMXBIN_DIR, "busybox"),"busybox")
+  output_zip.write(os.path.join(SYSTEMBIN_DIR, "flash_image"),"flash_image")
+  output_zip.write(os.path.join(SYSTEMBIN_DIR, "erase_image"),"erase_image")
   output_zip.write(os.path.join(UTILITIES_DIR, "bml_over_mtd"),"bml_over_mtd")
   output_zip.write(os.path.join(TARGET_DIR, "bml_over_mtd.sh"),"bml_over_mtd.sh")
   output_zip.write(os.path.join(TARGET_DIR, "updater.sh"),"updater.sh")
