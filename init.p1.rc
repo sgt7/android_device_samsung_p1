@@ -1,32 +1,5 @@
-# Sequence of init files - see system/core/init/init.c
-#
-# 1. init.rc
-# 2. init.<hardware>.rc
-#
-# Sequence of init triggers - see system/core/init/init.c
-# 
-# 01. early-init
-# 02. init
-# 03. if bootmode=charger
-#      early-fs
-# 04. if emmc_boot
-#       emmc-fs
-#     else
-#       fs
-# 06. post-fs
-# 07. post-fs-data
-# 08. if bootmode=charger
-#       charger
-# 09. early-boot
-# 10. boot
-# 11. property triggers
-
-# --------------------------------------------------------------------------------------
-# define triggers
-# --------------------------------------------------------------------------------------
-
 import init.p1-common.rc
-import usb.rc
+import init.p1.usb.rc
 
 on init
 
