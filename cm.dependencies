@@ -10,6 +10,6 @@
     {
         "repository": "android_kernel_samsung_p1",
         "target_path": "kernel/samsung/p1",
-        "branch": "android-samsung-2.6.35"
+        "branch": "jellybean"
     }
 ]
