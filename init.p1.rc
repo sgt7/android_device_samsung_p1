@@ -7,9 +7,10 @@ on init
     mkdir /radio
     mkdir /efs
 
-    export SECONDARY_STORAGE /mnt/emmc
-    mkdir /mnt/emmc 0000 system system
-    symlink /mnt/emmc /emmc
+    export SECONDARY_STORAGE /storage/sdcard1
+    mkdir /storage/sdcard1 0000 system system
+    symlink /storage/sdcard1 /mnt/emmc
+    symlink /storage/sdcard1 /emmc
 
 on fs
 
