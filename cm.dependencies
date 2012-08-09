@@ -4,12 +4,11 @@
         "target_path": "device/samsung/p1-common"
     },
     {
-        "repository": "android_packages_apps_SamsungServiceMode",
-        "target_path": "packages/apps/SamsungServiceMode"
+        "repository": "android_kernel_samsung_p1",
+        "target_path": "kernel/samsung/p1"
     },
     {
-        "repository": "android_kernel_samsung_p1",
-        "target_path": "kernel/samsung/p1",
-        "branch": "jellybean"
+        "repository": "android_packages_apps_SamsungServiceMode",
+        "target_path": "packages/apps/SamsungServiceMode"
     }
 ]
