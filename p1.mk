@@ -50,7 +50,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/p1/init.p1.rc:root/init.p1.rc \
-	device/samsung/p1/ueventd.p1.rc:root/ueventd.p1.rc 
+	device/samsung/p1/fstab.p1:root/fstab.p1 \
+	device/samsung/p1/ueventd.p1.rc:root/ueventd.p1.rc
 
 # vold
 PRODUCT_COPY_FILES += \
@@ -82,9 +83,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.vold.switchablepair=/storage/sdcard0,/storage/sdcard1 \
        persist.sys.vold.switchexternal=1
 
-# keep dalvik cache on /data
-PRODUCT_PROPERTY_OVERRIDES += \
-	dalvik.vm.dexopt-data-only=1
+# Modem script
+PRODUCT_COPY_FILES += \
+	device/samsung/p1/20-modem.sh:20-modem.sh
 
 # set recovery.fstab location (needed for p1l & p1n products)
 TARGET_RECOVERY_FSTAB := device/samsung/p1/recovery.fstab
