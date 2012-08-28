@@ -78,9 +78,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
        rild.libargs=-d/dev/ttyS0 \
        ro.sf.lcd_density=160 \
        ro.phone_storage=1 \
-       ro.additionalmounts=/mnt/emmc \
-       ro.vold.switchablepair=/mnt/sdcard,/mnt/emmc \
-       persist.sys.vold.switchexternal=0
+       ro.additionalmounts=/storage/sdcard1 \
+       ro.vold.switchablepair=/storage/sdcard0,/storage/sdcard1 \
+       persist.sys.vold.switchexternal=1
 
 # keep dalvik cache on /data
 PRODUCT_PROPERTY_OVERRIDES += \
