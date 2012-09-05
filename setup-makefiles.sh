@@ -28,6 +28,9 @@ PRODUCT_COPY_FILES := \\
     $OUTDIR/proprietary/lib/libril.so:obj/lib/libril.so
 
 PRODUCT_COPY_FILES += \\
+    $OUTDIR/proprietary/modem.bin:modem.bin
+
+PRODUCT_COPY_FILES += \\
 EOF
 
 LINEEND=" \\"
