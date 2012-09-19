@@ -15,35 +15,37 @@ on init
     symlink /storage/sdcard1 /mnt/emmc
     symlink /storage/sdcard1 /emmc
 
-    # create P1 device specific partition directories
-    mkdir /radio
-    mkdir /efs
-
 on fs
 
-    #mount_all /fstab.p1
-    #FIXME!
-    mount ext4 /dev/block/mmcblk0p2 /system ro
-    mount ext4 /dev/block/mmcblk0p3 /cache
+    mkdir /radio 0775 radio radio
+    mkdir /efs 0775 radio radio
 
     mount yaffs2 mtd@efs /efs
+    mount yaffs2 mtd@radio /radio
 
-on post-fs
+    mount ext4 /dev/block/mmcblk0p2 /data
+    mount ext4 /dev/block/mmcblk0p3 /cache
 
-    # We chown/chmod again, because mount is run as root + defaults
-    chown radio radio /efs
-    chmod 0775 /efs
+    #FIXME: nothing in fstab gets mounted
+    #mount_all /fstab.p1
 
-on post-fs-data
+    chown radio radio /radio/modem.bin
 
     # set permissions for files in /efs
+    chown radio radio /efs
     chmod 770 /efs/bluetooth
     chmod 770 /efs/imei
 
     # set permissions for files in /radio
-    chown radio radio /system/vendor/modem.bin
-    chmod 0777 /system/vendor/modem.bin
-    symlink /system/vendor/modem.bin /dev/block/bml12
+    chown radio radio /radio/modem.bin
+
+on post-fs
+
+    # symlink for SamsungRIL
+    symlink /radio/modem.bin /dev/block/bml12
+
+
+on post-fs-data
 
     # gps P1 only
     chown gps root /sys/class/sec/gps/GPS_PWR_EN/value
@@ -65,7 +67,7 @@ on post-fs-data
 
     # System server can control backlight brightness
     chmod 0664 /sys/class/lcd/s5p_lcd/lcd_power
-    chown radio system /sys/class/lcd/s5p_lcd/lcd_power
+    chown system system /sys/class/lcd/s5p_lcd/lcd_power
 
     # Allow net_raw to have access to /dev/socket directory
     chown root net_raw /dev/socket

@@ -14,6 +14,6 @@ for FILE in `cat proprietary-files.txt | grep -v ^# | grep -v ^$`; do
     adb pull /system/$FILE $BASE/$FILE
 done
 
-adb pull /system/vendor/modem.bin $BASE/
+adb pull /radio/modem.bin $BASE/
 
 ./setup-makefiles.sh

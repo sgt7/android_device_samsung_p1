@@ -49,7 +49,6 @@ def CopyBMLoverMTD(output_zip):
   output_zip.write(os.path.join(UTILITIES_DIR, "bml_over_mtd"),"bml_over_mtd")
   output_zip.write(os.path.join(TARGET_DIR, "bml_over_mtd.sh"),"bml_over_mtd.sh")
   output_zip.write(os.path.join(TARGET_DIR, "updater.sh"),"updater.sh")
-  output_zip.write(os.path.join(TARGET_DIR, "20-modem.sh"),"20-modem.sh")
 
 def WriteFullOTAPackage(input_zip, output_zip):
   # TODO: how to determine this?  We don't know what version it will
