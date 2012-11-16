@@ -65,6 +65,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
 	SamsungServiceMode
 
+PRODUCT_PACKAGES += \
+	hdmi.s5pc110
+
 # Build.prop overrides
 PRODUCT_PROPERTY_OVERRIDES += \
        ro.telephony.call_ring.delay=3000 \
