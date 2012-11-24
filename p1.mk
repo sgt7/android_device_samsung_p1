@@ -79,7 +79,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
        ro.ril.emc.mode=2 \
        rild.libpath=/system/lib/libsec-ril.so \
        rild.libargs=-d/dev/ttyS0 \
-       ro.sf.lcd_density=160 \
        ro.phone_storage=1 \
        ro.additionalmounts=/storage/sdcard1 \
        ro.vold.switchablepair=/storage/sdcard0,/storage/sdcard1 \
