@@ -56,9 +56,9 @@ def WriteFullOTAPackage(input_zip, output_zip):
   # change very often.
   script = edify_generator.EdifyGenerator(3, OPTIONS.info_dict)
 
-  metadata = {"post-build": GetBuildProp("ro.build.fingerprint", input_zip),
-              "pre-device": GetBuildProp("ro.product.device", input_zip),
-              "post-timestamp": GetBuildProp("ro.build.date.utc", input_zip),
+  metadata = {"post-build": GetBuildProp("ro.build.fingerprint", OPTIONS.info_dict),
+              "pre-device": GetBuildProp("ro.product.device", OPTIONS.info_dict),
+              "post-timestamp": GetBuildProp("ro.build.date.utc", OPTIONS.info_dict),
               }
 
   device_specific = common.DeviceSpecificParams(
@@ -72,6 +72,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
 
   AppendAssertions(script, input_zip)
   device_specific.FullOTA_Assertions()
+  device_specific.FullOTA_InstallBegin()
 
   if OPTIONS.backuptool:
     script.Mount("/system")
@@ -80,6 +81,9 @@ def WriteFullOTAPackage(input_zip, output_zip):
 
   if OPTIONS.wipe_user_data:
     script.FormatPartition("/data")
+
+  if "selinux_fc" in OPTIONS.info_dict:
+    WritePolicyConfig(OPTIONS.info_dict["selinux_fc"], output_zip)
 
   script.FormatPartition("/system")
   script.Mount("/system")
@@ -97,9 +101,6 @@ def WriteFullOTAPackage(input_zip, output_zip):
   if OPTIONS.backuptool:
     script.ShowProgress(0.2, 10)
     script.RunBackup("restore")
-
-  if OPTIONS.modelidcfg:
-    script.RunConfig("")
 
   CopyBootFiles(input_zip, output_zip)
   CopyBMLoverMTD(output_zip)
