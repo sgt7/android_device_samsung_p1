@@ -65,8 +65,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
 	SamsungServiceMode
 
-PRODUCT_PACKAGES += \
-	hdmi.s5pc110
+#PRODUCT_PACKAGES += \
+#	hdmi.s5pc110
 
 # Build.prop overrides
 PRODUCT_PROPERTY_OVERRIDES += \

@@ -27,7 +27,7 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 477626368
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := ./device/samsung/p1/releasetools/p1_ota_from_target_files
 TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := ./device/samsung/p1/releasetools/p1_img_from_target_files
 
-BOARD_USES_HDMI := true
+#BOARD_USES_HDMI := true
 TARGET_USE_HWDECODING_TVOUT := true
 
 TARGET_SEC_OMX_BIG_MMAP_BUFFER_SIZE := true
