@@ -32,6 +32,8 @@ echo "Invalid device: $DEVICE"
 ;;
 esac
 
+if [ "$model" != "p1" ]
 mv /tmp/boot_$model.img /tmp/boot.img
+fi
 
 exit 0
