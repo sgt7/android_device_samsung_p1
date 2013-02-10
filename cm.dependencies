@@ -8,8 +8,8 @@
         "target_path": "hardware/samsung"
     },
     {
-        "repository": "android_kernel_samsung_p1",
-        "target_path": "kernel/samsung/p1"
+        "repository": "android_kernel_samsung_aries",
+        "target_path": "kernel/samsung/aries"
     },
     {
         "repository": "android_packages_apps_SamsungServiceMode",
