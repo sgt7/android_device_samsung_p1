@@ -50,7 +50,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/p1/init.p1.rc:root/init.p1.rc \
-	device/samsung/p1/ueventd.p1.rc:root/ueventd.p1.rc
+	device/samsung/p1/ueventd.p1.rc:root/ueventd.p1.rc \
+	device/samsung/p1-common/init.recovery.rc:root/init.recovery.p1.rc
 
 # vold
 PRODUCT_COPY_FILES += \
