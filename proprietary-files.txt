@@ -61,7 +61,7 @@ media/chargingwarning_temp.qmg
 media/usb_not_charging.qmg
 
 ## bluetooth
-vendor/firmware/bcm4329.hcd
+vendor/firmware/BCM4329B1.hcd
 
 ## tvout
 lib/libddc.so
